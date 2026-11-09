@@ -6,7 +6,7 @@ An AI-led math tutor that starts teaching, listens to each learner, and changes 
 
 [**Try the public beta**](https://whymath.krako.xyz) · [Watch the 96-second demo](demo/why-math-final-demo-96s.mp4) · [Send feedback](https://github.com/hkalbertkim/why-math/issues)
 
-<img src="docs/images/storyboard-01.png" width="100%" alt="Why Math? — The lesson adapts to you. Original 3D art from the product's hackathon presentation." />
+<img src="docs/images/why-math-hero-4k.png" width="100%" alt="Why Math? — The lesson adapts to you. High-resolution navy and cyan 3D educational hero with no timestamp overlay." />
 
 <small>Built at c0mpiled-17 Seoul, The Primer track · November 2026. The public beta is experimental.</small>
 
