@@ -36,6 +36,9 @@ F. **Release:** build, local smoke test, push GitHub, verify demo URL (if deploy
 
 ## Suggested responsive UI
 
+See [Visual Asset Policy](VISUAL_ASSET_POLICY.md) for PNG, transparent sprite, GIF, SVG exceptions, quality, math and accessibility requirements.
+
+
 **Desktop:** central teacher-led lesson and a live generated textbook pane. A compact curriculum/progress switcher may open as a drawer, not a permanently distracting third panel.
 
 **Mobile:** teacher-led lesson in main view; textbook accessed by a clearly labeled tab or bottom sheet; preserve lesson context when switching.

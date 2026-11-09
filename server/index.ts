@@ -1,0 +1,15 @@
+import express from 'express';
+import { z } from 'zod';
+import { LessonService } from './service.js';
+import { SessionStore } from './store.js';
+import { simulateStudent } from './student.js';
+const app=express(); app.use(express.json({limit:'32kb'}));
+const store=new SessionStore(); await store.load(); const service=new LessonService(store);
+app.get('/api/health', (_req,res)=>res.json({ok:true,service:'why-math',codexCli:true,time:new Date().toISOString()}));
+app.get('/api/sessions',(_req,res)=>res.json(store.list()));
+app.get('/api/sessions/:id',(req,res)=>{const s=store.get(req.params.id); return s?res.json(s):res.status(404).json({error:'Session not found'});});
+app.post('/api/sessions',async(req,res,next)=>{try{const b=z.object({learnerId:z.string().min(1).max(60),learnerLabel:z.string().min(1).max(60),language:z.enum(['en','ko']),mode:z.enum(['codex-live','ollama-local','offline-fallback','replay-fixture']).optional(),concept:z.enum(['zero','number-line','negative-numbers']).optional(),entryInput:z.string().max(400).optional()}).parse(req.body);const session=await service.create(b.learnerId,b.learnerLabel,b.language,b.concept||'zero',b.mode);res.status(201).json(b.entryInput?.trim()?(await service.turn(session.id,b.entryInput,b.mode)).session:session);}catch(e){next(e)}});
+app.post('/api/sessions/:id/simulate',async(req,res,next)=>{try{const s=store.get(req.params.id);if(!s)return res.status(404).json({error:'Session not found'});const student=await simulateStudent(s);const b=z.object({mode:z.enum(['codex-live','ollama-local','offline-fallback','replay-fixture']).optional()}).parse(req.body||{});const result=await service.turn(s.id,student.response,b.mode||'ollama-local');res.json({...result,student});}catch(e){next(e)}});
+app.post('/api/sessions/:id/turns',async(req,res,next)=>{try{const b=z.object({input:z.string().min(1).max(1000),mode:z.enum(['codex-live','ollama-local','offline-fallback','replay-fixture']).optional()}).parse(req.body);res.json(await service.turn(req.params.id,b.input,b.mode));}catch(e){next(e)}});
+app.use((err:unknown,_req:express.Request,res:express.Response,_next:express.NextFunction)=>{const message=err instanceof Error?err.message:'Request failed';res.status(message==='Session not found'?404:400).json({error:message});});
+const port=Number(process.env.PORT||8787); app.listen(port,()=>console.log(`Why Math API on http://localhost:${port}`));

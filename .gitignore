@@ -11,3 +11,6 @@ coverage/
 
 # Project-local developer tooling and GBrain database
 .local-tools/
+
+# Runtime student test sessions
+data/
