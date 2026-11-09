@@ -76,3 +76,8 @@ GStack independent focused reviewer returned **PASS FOR SCOPED P0** after auth, 
 - First PNG-based interactive counting scene and its mobile/desktop QA completed. GStack scoped visual review PASS after screenshots clarified initial state is zero apples.
 - 90-second narrated demo video exists; first gStack presentation review BLOCK due to unverified outcome wording and weak CTA. Video copy revised; final follow-up approval pending.
 - Current test baseline 28/28 PASS and TypeScript/Vite build PASS. Not production ready.
+
+## Update 2026-11-09 12:21 KST — video
+
+- **GStack scoped video presentation review PASS**, after an initial P0 BLOCK on outcome framing and missing CTA was resolved.
+- GitHub source and 90-second narrated video uploaded. **Final event form submission and external live app deployment remain unverified/not performed**. This is a video-draft pass, not overall event acceptance or pedagogical validation.
