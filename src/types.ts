@@ -8,7 +8,7 @@ export interface Evidence { id: string; concept: ConceptId; kind: 'observation' 
 export interface TextbookEntry { id: string; concept: ConceptId; title: string; fact: string; explanation: string; status: 'exploring' | 'developing' | 'evidenced'; evidence: string; updatedAt: string }
 export interface LearnerState { vocabulary: number; concept: number; transfer: number; observations: string[] }
 export interface Session {
-  id: string; learnerId: string; learnerLabel: string; language: Language; concept: ConceptId; mode: SourceMode;
+  id: string; learnerId: string; learnerLabel: string; isFixture?: boolean; language: Language; concept: ConceptId; mode: SourceMode;
   messages: Message[]; evidence: Evidence[]; textbook: TextbookEntry[]; state: LearnerState; showNumberLine: boolean; updatedAt: string;
 }
 export interface TurnResult { session: Session; gap: Gap; action: string; source: SourceMode; notice?: string }

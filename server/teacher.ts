@@ -42,6 +42,12 @@ export function safeTeaching(ctx: TeacherContext, output: TeacherOutput): Teache
     const ko=ctx.language==='ko';
     return {gap:'concept',action:'number-line',explanation:ko?`수직선에서는 오른쪽의 수가 더 큽니다. ${left} ${relation} ${right}입니다. 위치를 기준으로 다시 생각해 봅시다.`:`The number farther right is greater. The correct comparison is ${left} ${relation} ${right}. Let's check the positions.`,question:ko?'그러면 -4와 -2 중 어느 수가 더 큰가요? 이유도 말해 주세요.':'Which is greater, -4 or -2? Explain why.',observation:ko?'음수의 순서를 반대로 이해하는 오개념이 관찰됐습니다.':'Learner reversed the order of negative integers.',evidenceKind:'misconception',textbookExplanation:ko?`정수의 크기는 수직선 위치로 비교합니다: ${left} ${relation} ${right}.`:`Compare integers by position on the number line: ${left} ${relation} ${right}.`,showNumberLine:true};
   }
+  // A genuine question or expressed uncertainty is not proof of a misconception.
+  // Never turn questions into confirmed wrong answers or mastery evidence.
+  if (/\?\s*$|？\s*$/.test(ctx.input.trim()) || /^(?:i (?:don't|do not) know|i'?m not sure|모르겠어요|잘 모르겠어요)[.! ]*$/i.test(ctx.input.trim())) {
+    return {...output, evidenceKind:'observation', action:output.action==='advance'?'transfer-check':output.action,
+      observation:ctx.language==='ko'?'학습자가 질문하거나 불확실함을 표현했습니다. 오개념 여부는 아직 확인되지 않았습니다.':'The learner asked a question or expressed uncertainty. No misconception or mastery is established yet.'};
+  }
   if (/^(?:yes[,.! ]*|i understand[.! ]*|알겠어요[.! ]*|네[.! ]*)$/i.test(ctx.input.trim()) && output.evidenceKind==='correct') return {...output,gap:'transfer',action:'transfer-check',evidenceKind:'observation',observation:ctx.language==='ko'?'이해했다는 자기보고 외의 근거가 없습니다.':'Self-reported understanding is not evidence of transfer.'};
   return output;
 }

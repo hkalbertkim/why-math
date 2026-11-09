@@ -37,7 +37,7 @@ Do not run whole autoplan or full ship release choreography repeatedly during th
 - G1: initial UI exists; fixture/human segmentation not yet fixed.
 - G2: initial implementation done, baseline Vitest 5/5 and TypeScript/Vite build passed outside the read-only review sandbox on 2026-11-09. An independent read-only gStack reviewer could not run Vitest due EPERM in Vite temp files, which is a sandbox limitation, NOT an app test failure.
 - G3: **PARTIAL / BLOCKED FOR FULL APPROVAL**. The original explicit negative-number mistake is now guarded; 15 targeted tests and build pass. A first gStack post-review BLOCKED the initial patch for composite Korean claims and unverified advancement. Revised tests and guard address those examples, but the subsequent read-only reviewer did not produce a terminal report. General math comprehension validation remains unproven.
-- G4: **BLOCKED**, unauthenticated session listing/access, non-atomic persistence.
+- G4: **P0 SCOPED CODE REVIEW PASS**, API session capability and serialized atomic writes reviewed; browser and HTTP integration/security tests remain pending for release approval.
 - G5: **NOT YET VERIFIED**, no raster teaching scene asset nor browser screenshot QA.
 - G6: **NOT STARTED**, no English 90-second video and no externally tested demo URL.
 
@@ -65,3 +65,7 @@ The gStack-guided review is saved locally at `/tmp/why-math-gstack-stage-review-
 - Attempted second gStack post-review: no terminal reviewer verdict; read-only sandbox produced EPERM in Vite temporary files; **review is pending**. Do not mark complete.
 - Remaining limitation: regex cannot validate arbitrary mathematical reasoning, and the two-positive-evidence heuristic is not a proven mastery model.
 - Next: obtain completed focused review, then resolve P0 session authorization and atomic storage, and perform live browser QA.
+
+## Update 2026-11-09 11:55 KST
+
+GStack independent focused reviewer returned **PASS FOR SCOPED P0** after auth, persistence, fixture, and React corrections. 24/24 current unit tests and production build pass; real browser tested English AI fixture A/B/C and Korean live learner without page errors. Remaining QA: authenticated route integration, release security, full user learning effect, polished raster teaching visuals and published demo URL.
