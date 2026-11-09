@@ -18,7 +18,7 @@ export class LessonService {
     const result = await teach({ language:session.language, concept:session.concept, input, history:session.messages, state:session.state, requestedMode }); const o=result.output;
     session.messages.push({id:randomUUID(),role:'teacher',text:`${o.explanation}\n\n${o.question}`,action:o.action,createdAt:now()});
     session.evidence.push({id:randomUUID(),concept:session.concept,kind:o.evidenceKind,text:o.observation,createdAt:now()});
-    const delta = o.evidenceKind === 'correct' ? 1 : 0; session.state.vocabulary += o.gap==='vocabulary'?0:delta; session.state.concept += o.gap==='concept'?0:delta; session.state.transfer += o.action==='advance'?1:0; session.state.observations.push(o.observation);
+    const delta = o.evidenceKind === 'correct' ? 1 : 0; session.state.vocabulary += o.gap==='vocabulary'?0:delta; session.state.concept += o.gap==='concept'?0:delta; session.state.transfer += (o.action==='advance' && o.evidenceKind==='correct' && session.evidence.filter(e=>e.kind==='correct').length>=2)?1:0; session.state.observations.push(o.observation);
     const entry=session.textbook[0]; entry.explanation=o.textbookExplanation; entry.evidence=o.observation; entry.status=session.state.transfer>0?'evidenced':session.evidence.length>1?'developing':'exploring'; entry.updatedAt=now();
     session.showNumberLine=o.showNumberLine; session.mode=result.source; session.updatedAt=now(); await this.store.save(session);
     return {session,gap:o.gap,action:o.action,source:result.source,notice:result.notice};

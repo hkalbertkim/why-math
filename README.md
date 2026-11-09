@@ -34,6 +34,7 @@ Target deliverables: working app, GitHub repository, 90-second English presentat
 - [Product brief](docs/PRODUCT_BRIEF.md)
 - [Hackathon scope and acceptance checks](docs/HACKATHON_SCOPE.md)
 - [Development workflow and adaptive UI specification](docs/DEVELOPMENT_WORKFLOW.md)
+- [gStack stage gates and quality evidence](docs/GSTACK_STAGE_GATES.md)
 - [Visual asset policy](docs/VISUAL_ASSET_POLICY.md)
 
 ## Development status
