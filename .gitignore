@@ -19,3 +19,7 @@ data/
 demo/presentation-kit/recordings/
 demo/presentation-kit/recorded-render-cache/
 demo/presentation-kit/why-math-final-live-demo.mp4
+# Re-render cache and discarded voice audition takes
+demo/presentation-kit/18slide-render-cache/
+demo/presentation-kit/audio/extra/extra1.mp3
+demo/presentation-kit/audio/extra/extra2.mp3
