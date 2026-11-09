@@ -31,8 +31,8 @@ const staticDir=process.env.WHY_MATH_PUBLIC_STATIC_DIR;
 if(staticDir){
   const target=resolve(staticDir);
   if(!existsSync(join(target,'index.html')))throw new Error('Missing built frontend at '+target);
-  app.use(express.static(target,{maxAge:'1h',index:'index.html'}));
-  app.get(/.*/, (req,res,next)=>req.path.startsWith('/api/')?next():res.sendFile(join(target,'index.html')));
+  app.use(express.static(target,{maxAge:'1h',index:false}));
+  app.get(/.*/, (req,res,next)=>{if(req.path.startsWith('/api/'))return next();res.setHeader('Cache-Control','no-cache');return res.sendFile(join(target,'index.html'));});
 }
 app.use((err:unknown,_req:express.Request,res:express.Response,_next:express.NextFunction)=>{const message=err instanceof Error?err.message:'Request failed';res.status(message==='Session not found'?404:400).json({error:publicBetaEnabled&&!['Session not found','Session access denied'].includes(message)?'Invalid request. Please check the input.':message});});
 const port=Number(process.env.PORT||8787); const host=process.env.WHY_MATH_BIND_HOST||'127.0.0.1'; app.listen(port,host,()=>console.log(`Why Math API on http://${host}:${port}`));
