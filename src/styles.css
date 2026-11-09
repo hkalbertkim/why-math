@@ -103,3 +103,5 @@
 @media(max-width:800px){.beta-main{height:calc(100vh - 112px)}.beta-main:has(.beta-welcome){height:calc(100vh - 66px)}.public-tabs{height:46px;padding:4px}.public-tabs button{min-width:0;flex:1}.beta-main .lesson-panel,.beta-main .book-panel{height:100%}.beta-welcome{padding:32px 18px 46px;gap:18px}.beta-welcome h2{font-size:30px}.beta-welcome-copy>p{font-size:14px}.beta-main-choices{flex-direction:column;align-items:stretch}.beta-main-choices .beta-start,.beta-main-choices .beta-watch{min-width:min(300px,85vw)}.beta-hero{max-height:240px}}
 
 .beta-main:has(.beta-welcome) .panel-head{display:none}
+
+@media(min-width:801px){.beta-main:not(:has(.beta-welcome)){height:calc(100vh - 130px);overflow:hidden}}
