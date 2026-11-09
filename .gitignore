@@ -8,3 +8,6 @@ build/
 .DS_Store
 *.log
 coverage/
+
+# Project-local developer tooling and GBrain database
+.local-tools/
