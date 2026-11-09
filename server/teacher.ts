@@ -35,6 +35,17 @@ function incorrectNegativeComparison(input: string): {left:number;right:number}|
 }
 
 export function safeTeaching(ctx: TeacherContext, output: TeacherOutput): TeacherOutput {
+  // Reviewed curriculum fact: zero is a number; avoid contradictory model prose.
+  // This guard is intentionally narrow, not a general mathematical verifier.
+  if(ctx.concept==='zero' && (/(?:zero|0)[^.!?]{0,100}(?:isn't|is not|not really|isn’t)\s+(?:a\s+|an\s+)?number/i.test(output.explanation+' '+output.textbookExplanation) || /0[^.!?]{0,60}(?:숫자가 아니다|수가 아니다|숫자가 아니)/.test(output.explanation+' '+output.textbookExplanation))) {
+    const ko=ctx.language==='ko';
+    return {...output,
+      explanation:ko?'0은 분명한 숫자입니다. 물건이 하나도 없다는 수량을 0으로 나타냅니다. 수직선에서도 0은 위치가 있고, 5에 0을 더하면 5 그대로입니다.':'Zero is a number. It can represent a quantity of no objects and marks a position on the number line. Adding zero leaves a number unchanged: 5 + 0 = 5.',
+      question:ko?'바구니에 사과가 0개 있을 때 1개를 넣으면 몇 개가 되나요?':'If an empty basket has 0 apples, how many apples will it have after adding 1?',
+      textbookExplanation:ko?'0은 숫자이며, 어떤 수에 0을 더해도 값이 변하지 않습니다.':'Zero is a number and the additive identity: a + 0 = a.',
+      evidenceKind:output.evidenceKind==='correct'?'observation':output.evidenceKind,
+      action:'concrete-example',showNumberLine:true};
+  }
   const incorrect=incorrectNegativeComparison(ctx.input);
   if (incorrect) {
     const {left,right}=incorrect;

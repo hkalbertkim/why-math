@@ -24,5 +24,5 @@ Math education is not a developer-diagram gallery. Visual clarity, illustration 
 ## Hackathon slice
 
 - Current functional number line uses HTML/CSS, not SVG. Keep it for the first proof of the learning loop, but improve its art direction and interactive affordances before claiming a polished visual experience.
-- For the next rich lesson, produce a high-quality illustrated PNG scene plus transparent PNG elements, compose them in the app, and let students interact with those elements.
+- Implemented first rich lesson: the interactive counting scene composes a large PNG background with transparent 3D apple/basket PNG sprites; plus/minus buttons update the visible count. See ASSET_SOURCES.md for license and screenshots. Further scenes remain future work.
 - Do not spend the entire build window on artwork before the student response → adaptive teaching action loop passes tests.

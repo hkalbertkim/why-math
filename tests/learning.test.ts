@@ -117,3 +117,14 @@ describe('questions and uncertainty are not errors',()=>{
   expect(safeTeaching({...ctx,language:'ko',input:'0은 무슨 뜻인가요?'},model).evidenceKind).toBe('observation');
  });
 });
+
+describe('grounded zero curriculum fact',()=>{
+ it('rejects a misleading statement that zero is not really a number',()=>{
+  const output={gap:'concept' as const,action:'advance' as const,explanation:"Zero is not a number in the same way 1 and 2 are.",question:'What next?',observation:'Understood.',evidenceKind:'correct' as const,textbookExplanation:'Zero is not really a number.',showNumberLine:false};
+  const ctx={language:'en' as const,concept:'zero' as const,input:'Why is zero a number?',history:[],state:{vocabulary:0,concept:0,transfer:0,observations:[]}};
+  const result=safeTeaching(ctx,output);
+  expect(result.explanation).toContain('Zero is a number');
+  expect(result.action).not.toBe('advance');
+  expect(result.textbookExplanation).not.toContain('not really a number');
+ });
+});

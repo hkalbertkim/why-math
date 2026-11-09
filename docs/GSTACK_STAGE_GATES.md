@@ -69,3 +69,10 @@ The gStack-guided review is saved locally at `/tmp/why-math-gstack-stage-review-
 ## Update 2026-11-09 11:55 KST
 
 GStack independent focused reviewer returned **PASS FOR SCOPED P0** after auth, persistence, fixture, and React corrections. 24/24 current unit tests and production build pass; real browser tested English AI fixture A/B/C and Korean live learner without page errors. Remaining QA: authenticated route integration, release security, full user learning effect, polished raster teaching visuals and published demo URL.
+
+## Update 2026-11-09 12:20 KST
+
+- Scoped P0 code review PASS (earlier). API integration tests for auth and fixture gating now PASS, but focused gStack HTTP integration review has no completed terminal result.
+- First PNG-based interactive counting scene and its mobile/desktop QA completed. GStack scoped visual review PASS after screenshots clarified initial state is zero apples.
+- 90-second narrated demo video exists; first gStack presentation review BLOCK due to unverified outcome wording and weak CTA. Video copy revised; final follow-up approval pending.
+- Current test baseline 28/28 PASS and TypeScript/Vite build PASS. Not production ready.

@@ -12,6 +12,22 @@ async function json<T>(url:string, init?:RequestInit):Promise<T>{const token=loc
 
 function NumberLine({language}:{language:Language}){return <figure className="number-line" aria-label={language==='ko'?'−5에서 5까지 수직선':'Number line from negative five to five'}><figcaption>{language==='ko'?'0을 기준으로 방향과 거리를 살펴보세요':'Use zero as the anchor: direction + distance'}</figcaption><div className="line">{[-5,-4,-3,-2,-1,0,1,2,3,4,5].map(n=><span className={n===0?'zero':''} key={n}><i></i><b>{n<0?'−'+Math.abs(n):n}</b></span>)}</div><div className="line-labels"><span>← {language==='ko'?'작아짐':'smaller'}</span><span>{language==='ko'?'커짐':'larger'} →</span></div></figure>}
 
+function CountingScene({language,prompt}:{language:Language;prompt:string}) {
+  const [apples,setApples]=useState(0);
+  const en=language==='en';
+  return <section className="counting-scene" aria-label={en?'Interactive counting lesson':'직접 조작하는 수 세기 수업'}>
+    <div className="counting-topline"><strong>{en?'Why is zero a number?':'0은 왜 숫자일까요?'}</strong><span>{en?'TRY IT':'직접 해보기'}</span></div>
+    <p className="counting-prompt">{prompt}</p>
+    <div className="counting-art" role="img" aria-label={en?`A basket with ${apples} apples`:`사과 ${apples}개가 있는 바구니`}>
+      <div className="counting-big-number" aria-live="polite">{apples}<small>{en?'apples':'개의 사과'}</small></div>
+      <img className="basket-sprite" src="/assets/basket.png" alt="" aria-hidden="true"/>
+      {Array.from({length:apples},(_,i)=><img key={i} className="apple-sprite" src="/assets/red-apple.png" alt="" aria-hidden="true" style={{left:`${37+(i%3)*12}%`,top:`${35+Math.floor(i/3)*12}%`,transform:`rotate(${(i-2)*7}deg)`}}/>)}
+    </div>
+    <div className="counting-controls"><button disabled={apples===0} onClick={()=>setApples(x=>Math.max(0,x-1))}>{en?'− Remove one':'− 하나 빼기'}</button><button onClick={()=>setApples(x=>Math.min(5,x+1))} disabled={apples===5}>{en?'+ Add one':'+ 하나 넣기'}</button></div>
+    <p>{apples===0?(en?'The basket has no apples. We write that quantity as 0.':'바구니에 사과가 없어요. 그 수량을 0으로 나타냅니다.'):(en?`Now it contains ${apples} ${apples===1?'apple':'apples'}. Counting describes what changed.`:`지금은 사과 ${apples}개가 있습니다. 수량이 어떻게 달라졌나요?`)}</p>
+  </section>;
+}
+
 export function App(){
   const [testMode,setTestMode]=useState(false); const [language,setLanguage]=useState<Language>('en'); const [mode,setMode]=useState<SourceMode>('ollama-local'); const [session,setSession]=useState<Session|null>(null); const [profile,setProfile]=useState<(typeof profiles)[number]>(profiles[0]); const [input,setInput]=useState(''); const [entryMode,setEntryMode]=useState<'guided'|'free'>('guided'); const [entryQuestion,setEntryQuestion]=useState(''); const [topic,setTopic]=useState<'zero'|'number-line'|'negative-numbers'>('zero'); const [busy,setBusy]=useState(false); const [notice,setNotice]=useState(''); const [tab,setTab]=useState<'lesson'|'book'>('lesson'); const end=useRef<HTMLDivElement>(null); const t=copy[language];
   useEffect(()=>{const id=localStorage.getItem('why-math-session');if(id&&localStorage.getItem('why-math-session-key'))json<Session>(`/api/sessions/${id}`).then(s=>{setSession(s);setLanguage(s.language)}).catch(()=>{localStorage.removeItem('why-math-session');localStorage.removeItem('why-math-session-key')})},[]);
@@ -32,7 +48,7 @@ export function App(){
       </section>
       <aside className={`book-panel ${tab!=='book'?'mobile-hidden':''}`}>
         <div className="panel-head"><div><span className="eyebrow">{t.auto}</span><h2>{t.book}</h2></div><span className="pulse"><i></i> LIVE</span></div>
-        {!session?<div className="book-empty"><span>∿</span><p>{t.empty}</p></div>:<div className="book-content">{session.showNumberLine&&<NumberLine language={language}/>} {session.textbook.map(x=><article className="entry" key={x.id}><div className="entry-title"><span>01</span><div><small>{x.concept.replace('-',' ')}</small><h3>{x.title}</h3></div><mark className={x.status}>{x.status}</mark></div><blockquote>{x.fact}</blockquote><p>{x.explanation}</p><div className="evidence"><span>◇</span><div><b>{t.evidence}</b><p>{x.evidence}</p></div></div></article>)}<section className="state-card"><div><span className="eyebrow">{t.state}</span><strong>{session.evidence.length} {language==='ko'?'개의 관찰':'observations'}</strong></div>{(['vocabulary','concept','transfer'] as const).map(k=><label key={k}><span>{k}</span><progress max="3" value={Math.min(3,session.state[k])}/><b>{session.state[k]}/3</b></label>)}<small>{language==='ko'?'한 번의 답으로 숙달을 판정하지 않습니다.':'No mastery claim is made from a single answer.'}</small></section>{latest&&<div className={`latest ${latest.kind}`}><b>{latest.kind}</b><span>{latest.text}</span></div>}</div>}
+        {!session?<div className="book-empty"><span>∿</span><p>{t.empty}</p></div>:<div className="book-content">{session.concept==='zero'&&session.showNumberLine&&<CountingScene language={language} prompt={session.messages.filter(m=>m.role==='teacher').at(-1)?.text.split('\n\n').at(-1)??''}/>} {session.showNumberLine&&session.concept!=='zero'&&<NumberLine language={language}/>} {session.textbook.map(x=><article className="entry" key={x.id}><div className="entry-title"><span>01</span><div><small>{x.concept.replace('-',' ')}</small><h3>{x.title}</h3></div><mark className={x.status}>{x.status}</mark></div><blockquote>{x.fact}</blockquote><p>{x.explanation}</p><div className="evidence"><span>◇</span><div><b>{t.evidence}</b><p>{x.evidence}</p></div></div></article>)}<section className="state-card"><div><span className="eyebrow">{t.state}</span><strong>{session.evidence.length} {language==='ko'?'개의 관찰':'observations'}</strong></div>{(['vocabulary','concept','transfer'] as const).map(k=><label key={k}><span>{k}</span><progress max="3" value={Math.min(3,session.state[k])}/><b>{session.state[k]}/3</b></label>)}<small>{language==='ko'?'한 번의 답으로 숙달을 판정하지 않습니다.':'No mastery claim is made from a single answer.'}</small></section>{latest&&<div className={`latest ${latest.kind}`}><b>{latest.kind}</b><span>{latest.text}</span></div>}</div>}
       </aside>
     </main>{notice&&<div className="toast" role="status"><button onClick={()=>setNotice('')}>×</button>{notice}</div>}
   </div>

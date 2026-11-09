@@ -13,6 +13,20 @@ Built for the **c0mpiled-17 Seoul hackathon — The Primer**, November 9, 2026.
 - [Project documentation](#project-documentation) — product brief, scope, and development workflow
 - [Development status](#development-status) — what is and isn't implemented
 
+## 90-second hackathon demo
+
+[Watch or download the English-narrated demonstration](demo/why-math-90s-demo.mp4) · [Submission description](demo/SUBMISSION.md) · [Narration and timing](demo/NARRATION.md). The video includes real English/Korean app captures and clearly labeled simulated learners; it is not a claim of proven learning outcomes.
+
+## Product preview
+
+The teacher leads a lesson; a learner can answer, ask, or explore. Its Living Textbook updates automatically. The first interactive visual is an illustrated counting exercise assembled from PNG layers.
+
+![Why Math desktop lesson with raster counting scene and Living Textbook](docs/screenshots/why-math-desktop.png)
+
+Mobile interface: [View screenshot](docs/screenshots/why-math-mobile.png).
+
+---
+
 ## What we're building
 
 1. **AI-led lessons.** Students do not need to know what to ask. The tutor begins with a logical math learning sequence.
@@ -37,10 +51,11 @@ Target deliverables: working app, GitHub repository, 90-second English presentat
 - [gStack stage gates and quality evidence](docs/GSTACK_STAGE_GATES.md)
 - [Latest build and QA checkpoint](docs/checkpoints/2026-11-09_MVP_P0_QA.md)
 - [Visual asset policy](docs/VISUAL_ASSET_POLICY.md)
+- [Image attribution and sources](docs/ASSET_SOURCES.md)
 
 ## Development status
 
-**Working hackathon MVP (November 9, 2026).** React/Vite UI and Express API, guided and free entry, Ollama-powered Korean/English lessons, three test-only AI learners, automatic Living Textbook updates, and local session persistence are implemented. The teacher uses a small reviewed concept map (zero, number line, negative numbers), not a complete curriculum. Mathematical accuracy, user learning outcomes, general-topic routing, cloud security and production scale are **not validated**. The Codex CLI path may time out and is experimental; the offline fallback is explicitly labeled. The richer PNG/GIF learning artwork and 90-second demo video are not yet delivered.
+**Working hackathon MVP (November 9, 2026).** React/Vite UI and Express API, guided and free entry, Ollama-powered Korean/English lessons, three test-only AI learners, automatic Living Textbook updates, and local session persistence are implemented. The teacher uses a small reviewed concept map (zero, number line, negative numbers), not a complete curriculum. Mathematical accuracy, user learning outcomes, general-topic routing, cloud security and production scale are **not validated**. The Codex CLI path may time out and is experimental; the offline fallback is explicitly labeled. A first interactive PNG/transparent-sprite counting scene and an English-narrated 90-second demo video are delivered. Additional lesson visuals, GIFs, formal account systems and general math curriculum coverage remain future work.
 
 ### Run on MSM2-1
 
@@ -51,7 +66,7 @@ npm run check
 npm run dev
 ```
 
-Browse `http://localhost:5173`. The API runs at `http://localhost:8787`. The default live teacher uses a local Ollama service with `gemma3:4b`; install and run the model separately when using a fresh host. The UI can use a labeled offline fallback if the model is unavailable.
+Browse `http://localhost:5173`. The API runs at `http://localhost:8787`. The default live teacher uses a local Ollama service with `gemma3:4b`; install and run the model separately when using a fresh host. The UI can use a labeled offline fallback if the model is unavailable. By default the API binds to `127.0.0.1` only, and no public deployment is configured.
 
 For the judge demo, select **AI student testing mode (simulation)** and one of the three fixtures; real learners do not see that fixture selector by default. Demo replay and offline scripted actions are never evidence of real students' learning gains.
 
