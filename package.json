@@ -7,7 +7,7 @@
     "dev": "concurrently -k \"tsx watch server/index.ts\" \"vite\"",
     "build": "tsc --noEmit && vite build",
     "start": "tsx server/index.ts",
-    "test": "vitest run tests/learning.test.ts tests/api.test.ts --maxWorkers=1 --no-file-parallelism",
+    "test": "vitest run tests/learning.test.ts tests/api.test.ts tests/public-beta.test.ts --maxWorkers=1 --no-file-parallelism",
     "test:watch": "vitest",
     "check": "npm run test && npm run build"
   },

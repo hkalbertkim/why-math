@@ -2,83 +2,101 @@
 
 **The lesson adapts to you.**
 
-An infinitely patient AI tutor that designs a unique learning experience for every student. Instead of asking students to adapt to a fixed lesson, Why Math? adapts explanations, visualizations, interactions, pace, and progression to their actual understanding.
+An AI-led math tutor that starts teaching, listens to each learner, and changes the next explanation based on what they actually understand. Instead of forcing everyone through the same lesson, Why Math? offers a different path to the same mathematical truth.
 
-Built for the **c0mpiled-17 Seoul hackathon — The Primer**, November 9, 2026.
+[**Try the public beta**](https://whymath.krako.xyz) · [Watch the 96-second demo](demo/why-math-final-demo-96s.mp4) · [Send feedback](https://github.com/hkalbertkim/why-math/issues)
+
+<img src="docs/images/storyboard-01.png" width="100%" alt="Why Math? — The lesson adapts to you. Original 3D art from the product's hackathon presentation." />
+
+<small>Built at c0mpiled-17 Seoul, The Primer track · November 2026. The public beta is experimental.</small>
+
+<br />
 
 ## Contents
 
-- [What we're building](#what-were-building) — the product experience
-- [Hackathon demo](#hackathon-demo) — the smallest proof
-- [Project documentation](#project-documentation) — product brief, scope, and development workflow
-- [Development status](#development-status) — what is and isn't implemented
+- [Try it](#try-it) — start a real AI-guided lesson in English or Korean
+- [Why this exists](#why-this-exists) — one mathematical truth, different learning paths
+- [The working prototype](#the-working-prototype) — teacher-led sessions, interactive examples, math notes
+- [Run locally](#run-locally) — development commands and model setup
+- [Limits and privacy](#limits-and-privacy) — what has and has not been proven
+- [Docs and feedback](#docs-and-feedback) — technical notes and ways to contribute
 
-## Hackathon demo (under 90 seconds)
+<br />
 
-[Watch or download the English-narrated fast-cut demonstration](demo/why-math-90s-demo.mp4) · [Submission description](demo/SUBMISSION.md) · [Narration and timing](demo/NARRATION.md). The 27-cut video explains why the project exists (fixed lessons, formula memorization without understanding), compares two same-age simulated learners, includes actual Korean/English app captures, 3D PNG math illustrations, and expressive English narration; it is not a claim of proven learning outcomes.
+## Try it
 
-## Presentation package (without the real browser footage)
+**Public beta:** https://whymath.krako.xyz
 
-The [presentation kit](demo/presentation-kit/README.md) includes the approved 72-second English narration (WAV and M4A), original PNG opening and ending cards, transparent lower-third captions, pitch copy, presenter notes, English SRT/WebVTT captions and the precise edit timeline. **Fourteen actual browser-recording segments are intentionally missing.** The final assembler refuses to render substitute footage. [Download the complete kit ZIP](demo/why-math-presentation-kit.zip).
+Choose **Guided curriculum** or **Free exploration**, then start with zero, a number line, or negative numbers. The AI teacher asks a question, listens to your reply, and selects the next explanation. A personal math notebook grows automatically during the lesson.
 
-## Product preview
+The public test is planned to remain available for at least one month starting November 9, 2026. It is hosted on an always-on development computer, **not** a commercial uptime-guaranteed cloud service. Daily message limits protect capacity. Do not enter names, school information, contact details, or other personal data.
 
-The teacher leads a lesson; a learner can answer, ask, or explore. Its Living Textbook updates automatically. The first interactive visual is an illustrated counting exercise assembled from PNG layers.
+<br />
 
-![Why Math desktop lesson with raster counting scene and Living Textbook](docs/screenshots/why-math-desktop.png)
+## Why this exists
 
-Mobile interface: [View screenshot](docs/screenshots/why-math-mobile.png).
+Students often memorize formulas without understanding what they mean. A learner who does not know the vocabulary may not even know how to ask a useful question. Why Math? starts with the teacher, not an empty chat box.
 
-The updated Living Textbook chapter has a [desktop screenshot](docs/screenshots/why-math-textbook-v2-desktop.png) and a [Korean mobile screenshot](docs/screenshots/why-math-textbook-v2-mobile-ko.png). [See the final UX review](docs/FINAL_UX_REVIEW_20261109.md).
+<img src="docs/images/storyboard-03.png" width="100%" alt="Traditional class compared with personalized AI instruction, from the original presentation." />
 
----
+The essential teaching loop is **start → observe → explain → verify → update**. Age can change presentation. Evidence of understanding should change the lesson.
 
-## What we're building
+<br />
 
-1. **AI-led lessons.** Students do not need to know what to ask. The tutor begins with a logical math learning sequence.
-2. **Adaptive instruction.** The tutor responds to student understanding and vocabulary, changing examples, explanations, visuals, questions, and pace.
-3. **Generative learning design.** A validated concept structure guides dynamically generated learning experiences rather than requiring a complete prewritten textbook.
-4. **Living textbook.** A personalized learning record is assembled automatically from each student's lesson, without a manual save action.
-5. **Bilingual learning.** Korean and English lesson flows are targeted for the demo.
+## The working prototype
 
-**Core principle:** Same mathematical truth. A different path to understanding for every student.
+### One teacher, different paths
 
-## Hackathon demo
+Two simulated 14-year-old test learners can start with the same objective and receive different model-generated explanations based on their replies. These agents are **testing fixtures**, not two separate teaching engines and not evidence of real-world educational effectiveness.
 
-Three simulated 14-year-old students can follow the same lesson with different understanding profiles, behind an explicit Test Mode switch. The same AI teacher adapts its next lesson, and each student's living textbook updates automatically. The demo should support real live runs and a clearly labeled replay of recorded events.
+<img src="docs/images/storyboard-05.png" width="100%" alt="Two simulated AI learners receive different next teaching explanations, using real application screenshots." />
 
-Target deliverables: working app, GitHub repository, 90-second English presentation/demo video. The video may show both Korean and English AI lessons.
+### Learn by doing
 
-## Project documentation
+The first interactive lesson uses a raster PNG apple-and-basket activity. Add and remove apples to explore zero, then explain the concept in your own words to the teacher.
 
-- [Product brief](docs/PRODUCT_BRIEF.md)
-- [Hackathon scope and acceptance checks](docs/HACKATHON_SCOPE.md)
-- [Development workflow and adaptive UI specification](docs/DEVELOPMENT_WORKFLOW.md)
-- [gStack stage gates and quality evidence](docs/GSTACK_STAGE_GATES.md)
-- [Latest build and QA checkpoint](docs/checkpoints/2026-11-09_MVP_P0_QA.md)
-- [Final local UI QC, Korean/English and mobile](docs/checkpoints/2026-11-09_FINAL_UI_QC.md)
-- [Visual asset policy](docs/VISUAL_ASSET_POLICY.md)
-- [Image attribution and sources](docs/ASSET_SOURCES.md)
+<img src="docs/images/storyboard-06.png" width="100%" alt="Real app screenshots show an empty basket with 0 apples and a basket with 2 apples." />
 
-## Development status
+### Your own math notebook
 
-**Working hackathon MVP (November 9, 2026).** React/Vite UI and Express API, guided and free entry, Ollama-powered Korean/English lessons (including mid-session language switching), three test-only AI learners, automatic Living Textbook updates, and local session persistence are implemented. The teacher uses a small reviewed concept map (zero, number line, negative numbers), not a complete curriculum. Mathematical accuracy, user learning outcomes, general-topic routing, cloud security and production scale are **not validated**. The Codex CLI path may time out and is experimental; the offline fallback is explicitly labeled. A first interactive PNG/transparent-sprite counting scene and an English-narrated 90-second demo video are delivered. Additional lesson visuals, GIFs, formal account systems and general math curriculum coverage remain future work.
+The notebook collects the key idea, generated explanation and observations from the current lesson. Questions and uncertainty remain visible; one answer does not certify mastery. The interface is available in English and Korean.
 
-### Run on MSM2-1
+<img src="docs/images/storyboard-08.png" width="100%" alt="The personal math notebook updates automatically from an AI tutoring conversation." />
+
+<br />
+
+## Run locally
+
+Requires Node.js, npm, and [Ollama](https://ollama.com/) for the live local model.
 
 ```bash
-cd /Volumes/MSM2-1-DATA/Projects/95_Why-Math
-npm install
+ollama pull gemma3:4b
+npm ci
 npm run check
 npm run dev
 ```
 
-Browse `http://localhost:5173`. The API runs at `http://localhost:8787`. The default live teacher uses a local Ollama service with `gemma3:4b`; install and run the model separately when using a fresh host. The UI can use a labeled offline fallback if the model is unavailable. By default the API binds to `127.0.0.1` only, and no public deployment is configured.
+Open http://localhost:5173. The API runs on localhost:8787. The local app includes a labeled offline fallback when a model is unavailable. The hosted beta uses a separate isolated data file and dedicated server process.
 
-For the judge demo, select **AI student testing mode (simulation)** and one of the three fixtures; real learners do not see that fixture selector by default. Demo replay and offline scripted actions are never evidence of real students' learning gains.
+<br />
 
-**Security:** This is a local hackathon app, not a production multi-user learning platform. Sessions require unguessable access capabilities, but there is no full account, abuse protection, privacy policy or managed hosting. Do not publicly expose the backend or input real minors' personal data. Existing sessions from before access-token protection cannot be reopened from the browser.
+## Limits and privacy
 
-## License
+- **Early proof of concept:** current curriculum is limited to zero, number lines and negative integers. The system has not been validated across arbitrary mathematics.
+- **No proven learning gains:** the three AI student personas are simulations used for software QA, not human learning studies.
+- **Small reviewed fact set:** targeted arithmetic checks exist, but model-generated explanations can still be wrong. Educator review and deterministic verification remain necessary.
+- **No accounts:** a browser keeps an unguessable session capability locally. Clearing browser storage loses the ability to resume that session.
+- **Public beta guardrails:** fair-use limits apply to session creation and AI calls; saved sessions are scheduled for deletion after approximately 30 days. The service is not approved for real minors' personal information.
+- **Availability:** a one-month trial is planned, but this is an experimental service without an uptime SLA.
 
-License not yet selected. Do not assume reuse permission for third-party content or source code.
+<br />
+
+## Docs and feedback
+
+[Product brief](docs/PRODUCT_BRIEF.md) · [Development workflow](docs/DEVELOPMENT_WORKFLOW.md) · [Quality gates](docs/GSTACK_STAGE_GATES.md) · [Final UI QA](docs/checkpoints/2026-11-09_FINAL_UI_QC.md) · [Visual asset sources](docs/ASSET_SOURCES.md)
+
+Issues, bugs and suggestions: [GitHub Issues](https://github.com/hkalbertkim/why-math/issues).
+
+The slide illustrations above are deterministic PNG derivatives of the **existing 12-slide hackathon presentation**, not newly generated SVGs. The math app screen captures shown in the presentation are actual product UI.
+
+**License:** Not yet selected. Do not assume the source code or third-party illustrations are available for unrestricted reuse.

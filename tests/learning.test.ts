@@ -140,3 +140,19 @@ describe('localized teaching guard',()=>{
   expect(responseMatchesLanguage('ko',result.output)).toBe(true);
  });
 });
+
+describe('one-month beta data retention',()=>{
+ it('purges only expired sessions without dropping current sessions',async()=>{
+  const {store,service,path}=await rig();
+  const old=await service.create('old-beta','Old','en','zero','offline-fallback');
+  const recent=await service.create('new-beta','New','en','zero','offline-fallback');
+  const expired={...old,updatedAt:'2026-01-01T00:00:00.000Z'};
+  await store.save(expired);
+  const removed=await store.pruneOlderThan('2026-10-10T00:00:00.000Z');
+  expect(removed).toBe(1);
+  expect(store.get(old.id)).toBeUndefined();
+  expect(store.get(recent.id)).toBeDefined();
+  const fromDisk=new SessionStore(path);await fromDisk.load();
+  expect(fromDisk.count()).toBe(1);
+ });
+});

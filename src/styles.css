@@ -75,3 +75,5 @@
 .textbook-updated-link:focus-visible{outline:3px solid #5eaa8d;outline-offset:2px}
 .textbook-new-dot{color:#25865f;font-size:21px;line-height:0;display:inline-block;margin-left:5px}
 @media(max-width:800px){.textbook-updated-link{margin-top:13px;margin-bottom:12px;font-size:12px}.mobile-tabs{position:sticky;top:0;z-index:3;height:48px}}
+
+.public-beta-note{max-width:460px;margin:14px auto 9px;padding:13px 16px;border:1px solid #c6d9ca;border-radius:13px;background:#edf5ec;text-align:left;color:#294e39}.public-beta-note strong{font-size:12px}.public-beta-note p{margin:5px 0 7px;font-size:11px;line-height:1.6;color:#496351}.public-beta-note a{font-size:11px;color:#205b46;font-weight:800;text-decoration:underline;text-underline-offset:3px}

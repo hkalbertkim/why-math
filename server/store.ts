@@ -21,6 +21,28 @@ export class SessionStore {
     // Never silently give legacy records a new public capability.
     this.sessions = new Map(values.map(s => [s.id, structuredClone(s)]));
   }
+  count(): number {return this.sessions.size;}
+  // Delete sessions older than the beta retention window using the same serialized, atomic file path.
+  async pruneOlderThan(cutoffISO:string):Promise<number> {
+    const task=async()=>{
+      const next=new Map([...this.sessions].filter(([_id,s])=>s.updatedAt>=cutoffISO));
+      const removed=this.sessions.size-next.size;
+      if(!removed)return 0;
+      await mkdir(dirname(this.file),{recursive:true});
+      const temp=`${this.file}.${process.pid}.${randomBytes(6).toString('hex')}.tmp`;
+      try {
+        const file=await open(temp,'wx',0o600);
+        try {await file.writeFile(JSON.stringify([...next.values()],null,2));await file.sync();}
+        finally{await file.close()}
+        await rename(temp,this.file);
+        this.sessions=next;
+        const directory=await open(dirname(this.file),'r');
+        try{await directory.sync()}finally{await directory.close()}
+      }finally{await rm(temp,{force:true}).catch(()=>{})}
+      return removed;
+    };
+    const work=this.pending.then(task,task);this.pending=work.catch(()=>{});return await work;
+  }
   get(id: string): SessionRecord | undefined { const s = this.sessions.get(id); return s ? structuredClone(s) : undefined; }
   // Token is returned once at creation. Persist only its digest, never return it via GET.
   async issueCapability(id: string): Promise<string> {
