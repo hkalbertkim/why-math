@@ -29,6 +29,8 @@ The teacher leads a lesson; a learner can answer, ask, or explore. Its Living Te
 
 Mobile interface: [View screenshot](docs/screenshots/why-math-mobile.png).
 
+The updated Living Textbook chapter has a [desktop screenshot](docs/screenshots/why-math-textbook-v2-desktop.png) and a [Korean mobile screenshot](docs/screenshots/why-math-textbook-v2-mobile-ko.png). [See the final UX review](docs/FINAL_UX_REVIEW_20261109.md).
+
 ---
 
 ## What we're building

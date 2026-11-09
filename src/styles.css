@@ -8,3 +8,62 @@
 .counting-scene{margin:0 0 20px;background:#fffdf8;border:1px solid #e1e3d9;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px #1e34260d}.counting-topline{padding:16px 19px 7px;display:flex;align-items:center;justify-content:space-between;gap:8px}.counting-topline strong{font-size:13px;color:var(--ink)}.counting-topline span{font-size:9px;font-weight:800;letter-spacing:.1em;color:#607567}.counting-art{position:relative;aspect-ratio:1.95/1;background:url('/assets/counting-bg.png') center center/cover no-repeat;overflow:hidden}.basket-sprite{position:absolute;width:37%;left:32%;bottom:4%;filter:drop-shadow(0 15px 15px #33251830);z-index:2}.apple-sprite{position:absolute;width:18%;max-width:68px;z-index:3;filter:drop-shadow(0 6px 8px #48261528);animation:apple-pop .3s ease-out both;pointer-events:none}.counting-big-number{position:absolute;left:8%;top:15%;font-size:clamp(32px,5vw,64px);font-family:Manrope,sans-serif;font-weight:800;color:#255346;line-height:1}.counting-big-number small{display:block;font-size:12px;font-weight:600;color:#73867e;margin-top:8px}.counting-controls{display:flex;gap:8px;padding:12px 15px 6px}.counting-controls button{flex:1;border:1px solid #ccd9cb;background:#edf3e9;border-radius:11px;padding:11px 5px;font-size:12px;font-weight:750;color:#1d5845}.counting-controls button:last-child{background:#1d6b55;color:white;border-color:#1d6b55}.counting-controls button:disabled{opacity:.3;cursor:not-allowed}.counting-scene>p{font-size:12px;line-height:1.5;color:#64756b;margin:8px 17px 15px}@keyframes apple-pop{from{opacity:0;transform:translateY(-10px) scale(.7)}to{opacity:1}}
 
 .counting-prompt{margin:2px 18px 10px;font-size:12px;font-weight:600;line-height:1.45;color:#44594d;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.counting-art .apple-sprite,.counting-art .basket-sprite{filter:saturate(.85) drop-shadow(0 7px 10px #35271830)}.counting-controls button{min-height:46px}.counting-topline span{font-size:10px;color:#40594e}.pulse{font-size:11px}.counting-scene>p:not(.counting-prompt){font-size:13px}.counting-controls{padding-bottom:9px}
+
+/* Final polish: a living textbook should read as a learning artifact, not an analytics dashboard. */
+.book-panel{background:#eef0e7}
+.book-panel .panel-head{background:#f4f5ef}
+.book-content{display:flex;flex-direction:column;gap:15px;padding-top:20px}
+.book-cover{position:relative;overflow:hidden;min-height:160px;padding:19px 22px 16px;border-radius:20px;background:linear-gradient(120deg,#14392d,#215f48);color:#fff;box-shadow:0 14px 25px #123b2c19}
+.book-cover:before{content:'';position:absolute;right:-72px;top:-110px;width:300px;height:300px;border:1px solid #ffffff24;border-radius:50%;box-shadow:0 0 0 36px #ffffff08,0 0 0 75px #ffffff07,0 0 0 112px #ffffff05;pointer-events:none}
+.book-cover-top{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:10px;letter-spacing:.12em;font-weight:800;color:#d9edcc}
+.book-cover-top span:last-child{font-size:10px;color:#e9e5ca;white-space:nowrap}
+.book-cover h3{position:relative;margin:22px 0 6px;font:800 clamp(21px,2.25vw,30px)/1.25 Manrope,sans-serif;letter-spacing:-.035em;color:#fff}
+.book-cover p{position:relative;color:#d6e3d7;font-size:12px;line-height:1.55;margin:0;max-width:94%}
+.book-cover-bottom{position:relative;display:flex;align-items:center;gap:8px;margin-top:19px;padding-top:10px;border-top:1px solid #ffffff31;font-size:11px;color:#ddebd7}
+.book-cover-dot{width:7px;height:7px;background:#d7ee77;border-radius:50%}
+.book-section-heading{display:flex;align-items:center;gap:9px;font-size:10px;font-weight:800;letter-spacing:.12em;color:#234e3b}
+.book-section-heading i{height:1px;flex:1;background:#cbd8c8}
+.book-section-heading{flex-wrap:wrap}.book-section-heading>i+*{letter-spacing:0;font-weight:500}
+.book-content .entry{margin:0;border-radius:18px;padding:19px;border:1px solid #dce4d6;box-shadow:0 5px 17px #1837290c}
+.entry-title h3{font-size:19px;letter-spacing:-.025em}.entry-title small{font-size:10px;letter-spacing:.06em;color:#55725f}.entry-title mark{font-size:10px;text-transform:none;padding:7px 9px;white-space:nowrap}
+.key-idea{margin:21px 0 0;padding:16px 18px 16px 20px;border-radius:13px;background:#edf4e6;border-left:5px solid #bedb65}
+.key-idea-label{font-size:10px;letter-spacing:.12em;font-weight:800;color:#3d674a;margin-bottom:8px}
+.entry .key-idea blockquote{padding:0;margin:0;border:0;background:transparent;color:#173c2d;font:700 17px/1.5 Manrope,sans-serif;letter-spacing:-.02em}
+.book-explanation{margin-top:17px}.book-explanation>span{font-size:10px;letter-spacing:.1em;color:#607b69;font-weight:800}.entry .book-explanation p{font-size:13px;line-height:1.7;color:#3a5147;margin:7px 0 0}
+.entry .evidence{border-top:1px dashed #d9e2d5;margin-top:18px;padding-top:14px}
+.evidence-symbol{display:grid;place-items:center;width:24px;height:24px;border-radius:8px;background:#e6efe6;flex:none;font-size:17px}
+.entry .evidence b{font-size:10px;color:#4c6958;letter-spacing:.07em}
+.entry .evidence p{font-size:12px;line-height:1.55;color:#52665a;margin:7px 0 0}
+.teaching-notes{border-radius:15px;background:#f9fbf6;border:1px solid #dce3d7;overflow:hidden}
+.teaching-notes summary{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;list-style:none;padding:15px 17px;font-size:13px;font-weight:750;color:#264b39}
+.teaching-notes summary::-webkit-details-marker{display:none}
+.teaching-notes summary:before{content:'▸';color:#507258;font-size:15px}.teaching-notes[open] summary:before{content:'▾'}
+.teaching-notes summary small{margin-left:auto;font-size:11px;font-weight:500;color:#758579}
+.teaching-notes-content{padding:0 16px 15px}.teaching-dimension{display:flex;justify-content:space-between;gap:10px;padding:7px 0;font-size:11px;color:#526759}.teaching-dimension span:last-child{font-size:10px;color:#829187;text-align:right}.teaching-notes-content p{padding-top:11px;border-top:1px solid #e2e9df;font-size:11px;line-height:1.5;color:#63786b}
+.book-update{display:flex;align-items:center;gap:9px;border-radius:14px;padding:13px 15px;background:#dfeee1;color:#28533c;font-weight:700;font-size:12px}
+.book-update-mark{font-size:18px;color:#368553}
+.book-content .counting-scene,.book-content .number-line{margin:0;flex:none}
+.demo-settings{border:1px solid #e1e7d9;background:#ffffffba;border-radius:14px;margin:16px 0 15px;text-align:left}
+.demo-settings summary{cursor:pointer;list-style:none;padding:12px 15px;font-size:12px;font-weight:700;color:#426251}
+.demo-settings summary:before{content:'▸ ';color:#688c72}.demo-settings[open] summary:before{content:'▾ '}
+.demo-settings summary span{font-size:10px;font-weight:500;color:#7b8b7f;margin-left:6px}
+.demo-settings .mode-picker{padding:0 10px 10px;margin:0}
+@media(max-width:800px){.book-content{padding:16px;gap:13px}.book-cover{min-height:140px;padding:17px}.book-cover h3{font-size:24px;margin-top:17px}.entry .key-idea blockquote{font-size:16px}.book-panel .panel-head{height:68px}}
+
+/* Visual chapter facts and a bridge back to the learning conversation. */
+.book-fact-banner{padding:17px 19px;border-radius:16px;background:#fffef9;border:1px solid #dfe8d3;box-shadow:0 5px 14px #1e3a2910;position:relative;overflow:hidden}
+.book-fact-banner:before{content:'';position:absolute;top:0;left:0;width:5px;height:100%;background:#b6d65e}
+.book-fact-banner small{display:block;font-size:10px;letter-spacing:.13em;font-weight:850;color:#528061;margin-bottom:8px}
+.book-fact-banner strong{display:block;font:750 17px/1.55 Manrope,sans-serif;color:#1d4736;letter-spacing:-.015em}
+.book-section-heading{font-size:11px}
+.book-content .book-explanation{margin-top:18px}
+.teaching-observation{border-radius:10px;padding:10px 12px;background:#eef4ec;margin:0 0 10px;font-size:12px;color:#3a5446}
+.teaching-observation b{font-size:11px}.teaching-observation p{font-size:12px;line-height:1.6;margin:5px 0 0;color:#53685a}
+.counting-reflection{padding:12px 16px 16px;margin-top:2px;border-top:1px solid #ecf0e6;display:flex;flex-direction:column;gap:10px}
+.counting-reflection>span{color:#3c5848;font-weight:800;font-size:13px}
+.counting-reflection>button{min-height:46px;border:1px solid #c6dfbb;background:#eaf4e6;border-radius:11px;color:#1c654b;font-weight:800;padding:11px;text-align:center;font-size:12px}
+.counting-reflection>button:hover{background:#dceedd}
+.counting-reflection>button:focus-visible{outline:3px solid #5eaa8d;outline-offset:2px}
+@media(max-width:800px){.counting-reflection>button{min-height:50px}.book-fact-banner strong{font-size:16px}}
+
+.demo-settings summary:focus-visible,.teaching-notes summary:focus-visible{outline:3px solid #5eaa8d;outline-offset:-3px;border-radius:12px}
