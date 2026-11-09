@@ -1,6 +1,6 @@
 export type Language = 'en' | 'ko';
-export type ConceptId = 'zero' | 'number-line' | 'negative-numbers';
-export type SourceMode = 'codex-live' | 'ollama-local' | 'offline-fallback' | 'replay-fixture';
+export type ConceptId = 'zero' | 'number-line' | 'negative-numbers' | 'equations';
+export type SourceMode = 'openai-live' | 'codex-live' | 'ollama-local' | 'offline-fallback' | 'replay-fixture';
 export type Gap = 'vocabulary' | 'concept' | 'transfer' | 'none';
 
 export interface Message { id: string; role: 'teacher' | 'learner'; text: string; action?: string; createdAt: string }

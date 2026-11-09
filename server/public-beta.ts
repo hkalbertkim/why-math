@@ -12,7 +12,8 @@ export const publicBetaEnabled=process.env.WHY_MATH_PUBLIC_BETA==='1';
 
 export const publicBetaGuard:RequestHandler=(req,res,next)=>{
   if(!publicBetaEnabled || req.method==='GET')return next();
-  if(req.body?.mode==='codex-live')return res.status(400).json({error:'Codex is unavailable in the public beta. Select Live local AI.'});
+  // Only the paid, quality-checked OpenAI teacher is callable by public visitors.
+  if(req.body?.mode && req.body.mode!=='openai-live')return res.status(400).json({error:'This beta uses the OpenAI tutor only.'});
   if(!['POST','PATCH'].includes(req.method))return res.status(405).json({error:'Method not permitted'});
 
   // The API only binds to loopback and is reached externally via our own Cloudflare Tunnel.

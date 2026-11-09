@@ -30,7 +30,7 @@ describe('public beta safety boundaries',()=>{
   expect(res.status).toBe(400);
  });
  it('limits new sessions and continues to enforce capability access',async()=>{
-  const args={learnerId:'public',learnerLabel:'Public',language:'en',concept:'zero',mode:'offline-fallback'};
+  const args={learnerId:'public',learnerLabel:'Public',language:'en',concept:'zero',mode:'openai-live'};
   const first=await request('/api/sessions',args);expect(first.status).toBe(201);
   expect((await request('/api/sessions/'+first.body.session.id)).status).toBe(403);
   expect((await request('/api/sessions/'+first.body.session.id,undefined,first.body.accessToken)).status).toBe(200);

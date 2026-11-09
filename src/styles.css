@@ -77,3 +77,29 @@
 @media(max-width:800px){.textbook-updated-link{margin-top:13px;margin-bottom:12px;font-size:12px}.mobile-tabs{position:sticky;top:0;z-index:3;height:48px}}
 
 .public-beta-note{max-width:460px;margin:14px auto 9px;padding:13px 16px;border:1px solid #c6d9ca;border-radius:13px;background:#edf5ec;text-align:left;color:#294e39}.public-beta-note strong{font-size:12px}.public-beta-note p{margin:5px 0 7px;font-size:11px;line-height:1.6;color:#496351}.public-beta-note a{font-size:11px;color:#205b46;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+
+/* The beta has two primary choices. Technical settings are hidden from visitors. */
+.beta-main{display:block;height:calc(100vh - 76px);background:#faf9f6;overflow:auto}
+.beta-main .lesson-panel,.beta-main .book-panel{height:100%;width:100%;border:0}
+.beta-main .lesson-panel.mobile-hidden,.beta-main .book-panel.mobile-hidden{display:none}
+.public-tabs{display:flex;justify-content:center;gap:10px;height:54px;padding:7px;background:#eff3ea;border-bottom:1px solid #d5dfd3}
+.public-tabs button{border:0;border-radius:10px;background:transparent;color:#577265;padding:8px 20px;font-size:13px;font-weight:800;min-width:150px}
+.public-tabs button.active{background:#fff;color:#14392d;box-shadow:0 3px 12px #0000000d}
+.beta-welcome{margin:auto;display:flex;flex-direction:column;gap:27px;align-items:center;justify-content:center;max-width:820px;padding:32px 26px 48px;text-align:center}
+.beta-eyebrow{letter-spacing:.15em;font-size:11px;font-weight:900;color:#3b8063}
+.beta-welcome h2{font:850 clamp(30px,5vw,48px)/1.15 Manrope,sans-serif;letter-spacing:-.05em;margin:12px 0}
+.beta-welcome-copy>p{font-size:17px;line-height:1.65;color:#607568;margin:0 auto;max-width:570px}
+.beta-main-choices{display:flex;justify-content:center;gap:12px;margin:27px auto 0;flex-wrap:wrap}
+.beta-main-choices .beta-start,.beta-main-choices .beta-watch{display:flex;gap:22px;align-items:center;justify-content:space-between;border-radius:16px;min-width:215px;min-height:58px;padding:16px 22px;font-weight:800;font-size:16px;text-decoration:none}
+.beta-start{background:#153b2e;color:#fff;border:1px solid #153b2e;cursor:pointer}
+.beta-start span{color:#d9ef8e}.beta-start:disabled{opacity:.5}
+.beta-watch{background:#fff;border:1px solid #cbd9c9;color:#174a38}
+.beta-main-choices :is(button,a):hover{transform:translateY(-1px)}
+.beta-topic{font-size:12px;color:#506f5e}.beta-topic summary{cursor:pointer;text-decoration:underline;text-underline-offset:3px}.beta-topic select{display:block;margin:10px auto;border-radius:10px;padding:10px;background:#fff;border:1px solid #d3ddd0;color:#204535}
+.beta-privacy{font-size:11px;line-height:1.55;color:#819188;max-width:630px;margin:0}.beta-privacy a{color:#3d7760;font-weight:800}
+.beta-hero{display:block;width:min(640px,100%);height:auto;border-radius:20px;object-fit:cover;box-shadow:0 16px 42px #143a2915}
+.beta-main .conversation{width:min(960px,100%);margin:auto}.beta-main .composer-wrap{width:min(960px,100%);margin:auto}
+.beta-main .book-content{width:min(950px,100%);margin:auto}.beta-main .book-panel .panel-head{justify-content:space-around}
+@media(max-width:800px){.beta-main{height:calc(100vh - 112px)}.beta-main:has(.beta-welcome){height:calc(100vh - 66px)}.public-tabs{height:46px;padding:4px}.public-tabs button{min-width:0;flex:1}.beta-main .lesson-panel,.beta-main .book-panel{height:100%}.beta-welcome{padding:32px 18px 46px;gap:18px}.beta-welcome h2{font-size:30px}.beta-welcome-copy>p{font-size:14px}.beta-main-choices{flex-direction:column;align-items:stretch}.beta-main-choices .beta-start,.beta-main-choices .beta-watch{min-width:min(300px,85vw)}.beta-hero{max-height:240px}}
+
+.beta-main:has(.beta-welcome) .panel-head{display:none}

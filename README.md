@@ -4,7 +4,7 @@
 
 An AI-led math tutor that starts teaching, listens to each learner, and changes the next explanation based on what they actually understand. Instead of forcing everyone through the same lesson, Why Math? offers a different path to the same mathematical truth.
 
-[**Try the public beta**](https://whymath.krako.xyz) · [Watch the 96-second demo](demo/why-math-final-demo-96s.mp4) · [Send feedback](https://github.com/hkalbertkim/why-math/issues)
+[**Try the public beta**](https://whymath.krako.xyz) · [Watch the 96-second demo on YouTube](https://youtu.be/ElSv6EovzYc) · [Send feedback](https://github.com/hkalbertkim/why-math/issues)
 
 <img src="docs/images/why-math-hero-4k.png" width="100%" alt="Why Math? — The lesson adapts to you. High-resolution navy and cyan 3D educational hero with no timestamp overlay." />
 
@@ -27,7 +27,7 @@ An AI-led math tutor that starts teaching, listens to each learner, and changes 
 
 **Public beta:** https://whymath.krako.xyz
 
-Choose **Guided curriculum** or **Free exploration**, then start with zero, a number line, or negative numbers. The AI teacher asks a question, listens to your reply, and selects the next explanation. A personal math notebook grows automatically during the lesson.
+Choose **Guided curriculum** or **Free exploration**, then start with zero, a number line, negative numbers, or equations. The AI teacher asks a question, listens to your reply, and selects the next explanation. A personal math notebook grows automatically during the lesson.
 
 The public test is planned to remain available for at least one month starting November 9, 2026. It is hosted on an always-on development computer, **not** a commercial uptime-guaranteed cloud service. Daily message limits protect capacity. Do not enter names, school information, contact details, or other personal data.
 
@@ -67,7 +67,7 @@ The notebook collects the key idea, generated explanation and observations from 
 
 ## Run locally
 
-Requires Node.js, npm, and [Ollama](https://ollama.com/) for the live local model.
+Requires Node.js and npm. The hosted public beta uses an OpenAI API key stored on its server. Local developers may use [Ollama](https://ollama.com/) or the same server-only OpenAI key setup.
 
 ```bash
 ollama pull gemma3:4b
@@ -82,7 +82,7 @@ Open http://localhost:5173. The API runs on localhost:8787. The local app includ
 
 ## Limits and privacy
 
-- **Early proof of concept:** current curriculum is limited to zero, number lines and negative integers. The system has not been validated across arbitrary mathematics.
+- **Early proof of concept:** current curriculum is limited to zero, number lines, negative integers and simple equations. The system has not been validated across arbitrary mathematics.
 - **No proven learning gains:** the three AI student personas are simulations used for software QA, not human learning studies.
 - **Small reviewed fact set:** targeted arithmetic checks exist, but model-generated explanations can still be wrong. Educator review and deterministic verification remain necessary.
 - **No accounts:** a browser keeps an unguessable session capability locally. Clearing browser storage loses the ability to resume that session.

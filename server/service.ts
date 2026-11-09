@@ -4,6 +4,14 @@ import { curriculum, titleFor } from './curriculum.js';
 import { SessionStore } from './store.js';
 import { teach } from './teacher.js';
 const now = () => new Date().toISOString();
+export function topicFromMessage(message:string,prior:ConceptId):ConceptId {
+  const text=message.toLowerCase();
+  if(/(?:이항|방정식|등식|transpos|equation|solve for [a-z])/.test(text))return 'equations';
+  if(/(?:수직선|number line)/.test(text))return 'number-line';
+  if(/(?:음수|negative numbers?)/.test(text))return 'negative-numbers';
+  return prior;
+}
+
 
 export class LessonService {
   private turns = new Map<string, Promise<unknown>>();
@@ -20,7 +28,8 @@ export class LessonService {
     const id = randomUUID(); const intros={
       zero:{ko:'오늘은 0이 왜 중요한 수인지 함께 알아볼게요. 사과가 하나도 없다면 몇 개라고 말할까요?',en:'Let’s explore the number zero. If a basket has no apples, how many apples are there?'},
       'number-line':{ko:'오늘은 수직선이 무엇인지 알아볼게요. 숫자들이 선 위의 각 위치에 놓일 수 있다는 것을 알고 있나요?',en:'Today we will explore the number line. Did you know every number can mark a position along a line?'},
-      'negative-numbers':{ko:'오늘은 음수가 어디에 있고 왜 필요한지 알아볼게요. 0보다 작은 수를 본 적이 있나요?',en:'Today we’ll explore where negative numbers live and why we need them. Where have you seen a number below zero?'}
+      'negative-numbers':{ko:'오늘은 음수가 어디에 있고 왜 필요한지 알아볼게요. 0보다 작은 수를 본 적이 있나요?',en:'Today we’ll explore where negative numbers live and why we need them. Where have you seen a number below zero?'},
+      equations:{ko:'오늘은 방정식에서 양변을 같게 유지하면서 문제를 푸는 이유를 알아볼게요. x + 3 = 5를 어떻게 풀까요?',en:'Let’s explore equations. Why can we subtract the same number from both sides of x + 3 = 5?'}
     } as const; const intro=intros[concept][language];
     const session: Session = { id, learnerId, learnerLabel, isFixture, language, concept, mode: mode ?? 'offline-fallback', messages:[{id:randomUUID(),role:'teacher',text:intro,action:'teacher-start',createdAt:now()}], evidence:[], textbook:[{id:randomUUID(),concept,title:titleFor(concept,language),fact:(language==='ko'?curriculum[concept].koFacts:curriculum[concept].facts)[0],explanation:language==='ko'?'대화를 시작했어요. 이해의 증거를 모으는 중입니다.':'Lesson started. Gathering evidence of understanding.',status:'exploring',evidence:language==='ko'?'아직 확인된 답변 없음':'No response assessed yet',updatedAt:now()}], state:{vocabulary:0,concept:0,transfer:0,observations:[]}, showNumberLine:true, updatedAt:now() };
     await this.store.save(session); return session;
@@ -42,12 +51,18 @@ export class LessonService {
   async turn(id: string, input: string, requestedMode?: SourceMode): Promise<TurnResult> {
     return this.serialize(id, async () => {
     const session = this.store.get(id); if (!session) throw new Error('Session not found');
+    const detected=topicFromMessage(input,session.concept);
+    if(detected!==session.concept){
+      session.concept=detected;
+      session.state={vocabulary:0,concept:0,transfer:0,observations:[]};
+      session.textbook.push({id:randomUUID(),concept:detected,title:titleFor(detected,session.language),fact:(session.language==='ko'?curriculum[detected].koFacts:curriculum[detected].facts)[0],explanation:session.language==='ko'?'새 수학 개념을 살펴보는 중입니다.':'Exploring a new mathematical idea.',status:'exploring',evidence:session.language==='ko'?'아직 확인된 이해 없음':'Understanding not yet assessed',updatedAt:now()});
+    }
     session.messages.push({id:randomUUID(),role:'learner',text:input,createdAt:now()});
     const result = await teach({ language:session.language, concept:session.concept, input, history:session.messages, state:session.state, requestedMode }); const o=result.output;
     session.messages.push({id:randomUUID(),role:'teacher',text:`${o.explanation}\n\n${o.question}`,action:o.action,createdAt:now()});
     session.evidence.push({id:randomUUID(),concept:session.concept,kind:o.evidenceKind,text:o.observation,createdAt:now()});
     const delta = o.evidenceKind === 'correct' ? 1 : 0; session.state.vocabulary += o.gap==='vocabulary'?0:delta; session.state.concept += o.gap==='concept'?0:delta; session.state.transfer += (o.action==='advance' && o.evidenceKind==='correct' && session.evidence.filter(e=>e.kind==='correct').length>=2)?1:0; session.state.observations.push(o.observation);
-    const entry=session.textbook[0]; entry.explanation=o.textbookExplanation; entry.evidence=o.observation; entry.status=session.state.transfer>0?'evidenced':session.evidence.length>1?'developing':'exploring'; entry.updatedAt=now();
+    const entry=session.textbook.at(-1)!; entry.explanation=o.textbookExplanation; entry.evidence=o.observation; entry.status=session.state.transfer>0?'evidenced':session.evidence.filter(e=>e.concept===session.concept).length>1?'developing':'exploring'; entry.updatedAt=now();
     session.showNumberLine=o.showNumberLine; session.mode=result.source; session.updatedAt=now(); await this.store.save(session);
     return {session,gap:o.gap,action:o.action,source:result.source,notice:result.notice};
     });

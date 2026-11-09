@@ -6,6 +6,7 @@ import { promisify } from 'node:util';
 import type { ConceptId, Language, LearnerState, Message, SourceMode } from '../src/types.js';
 import { curriculum } from './curriculum.js';
 import { jsonSchema, teacherOutputSchema, type TeacherOutput } from './schema.js';
+import { openaiTeacher } from './openai-teacher.js';
 const execFileAsync = promisify(execFile);
 
 export interface TeacherContext { language: Language; concept: ConceptId; input: string; history: Message[]; state: LearnerState; requestedMode?: SourceMode }
@@ -63,7 +64,8 @@ export function safeTeaching(ctx: TeacherContext, output: TeacherOutput): Teache
   return output;
 }
 
-function classify(input: string, language: Language): TeacherOutput {
+function classify(input: string, language: Language, concept: ConceptId='negative-numbers'): TeacherOutput {
+  if(concept==='zero'||concept==='equations')return safeLocalizedFallback({language,concept,input,history:[],state:{vocabulary:0,concept:0,transfer:0,observations:[]}});
   const s = input.trim().toLowerCase();
   const ko = language === 'ko';
   const vocab = /(what.*mean|meaning|word|뜻|무슨 말|용어|모르겠)/.test(s);
@@ -103,9 +105,10 @@ function safeLocalizedFallback(ctx: TeacherContext): TeacherOutput {
   const options={
     zero:{ko:['0은 숫자입니다. 아무것도 없다는 수량을 0으로 나타낼 수 있고, 수직선에도 0의 위치가 있습니다.','바구니에 사과가 한 개도 없을 때 숫자로 어떻게 표현할까요?','0은 수량이 없음을 나타내는 숫자입니다.'],en:['Zero is a number. It can represent no objects and has its own location on the number line.','How do we write the number of apples in an empty basket?','Zero is a number that can represent an empty quantity.']},
     'number-line':{ko:['수직선에서 수는 오른쪽으로 갈수록 커지고 왼쪽으로 갈수록 작아집니다.','0의 왼쪽에 있는 수 -2와 오른쪽에 있는 수 2 중 어느 쪽이 더 클까요?','수직선에서 오른쪽에 있는 수가 더 큽니다.'],en:['Numbers increase to the right and decrease to the left on a number line.','Which is greater, -2 on the left of zero or 2 on the right?','Numbers increase toward the right of the number line.']},
-    'negative-numbers':{ko:['음수는 0보다 작은 수입니다. 수직선에서는 0의 왼쪽에 표시합니다.','0보다 왼쪽에 있는 -3과 -1 중 어느 수가 더 클까요?','음수는 0보다 작고 수직선의 왼쪽에 있습니다.'],en:['Negative numbers are less than zero and appear to its left on the number line.','Which is greater on the number line, -3 or -1?','Negative numbers are less than zero.']}
+    'negative-numbers':{ko:['음수는 0보다 작은 수입니다. 수직선에서는 0의 왼쪽에 표시합니다.','0보다 왼쪽에 있는 -3과 -1 중 어느 수가 더 클까요?','음수는 0보다 작고 수직선의 왼쪽에 있습니다.'],en:['Negative numbers are less than zero and appear to its left on the number line.','Which is greater on the number line, -3 or -1?','Negative numbers are less than zero.']},
+    equations:{ko:['방정식에서 이항은 항을 그냥 옮기는 것이 아니라 양변에 같은 역연산을 하여 등호를 유지하는 것입니다. 예를 들어 x + 3 = 5에서 양변에 3을 빼면 x = 2가 됩니다.','x + 4 = 7에서 x를 구하려면 양변에 무엇을 해야 할까요?','등식은 양쪽에 같은 연산을 해야 유지됩니다.'],en:['Moving a term in an equation is shorthand for applying the same inverse operation to both sides, keeping equality. In x + 3 = 5, subtract 3 from both sides to get x = 2.','What would you do to both sides of x + 4 = 7 to find x?','An equation stays balanced when you perform the same operation on both sides.']}
   }[concept][ctx.language];
-  return {gap:'concept',action:'concrete-example',explanation:options[0],question:options[1],observation:ko?'언어 검사로 안전한 설명을 사용했습니다. 현재 이해도는 아직 확인되지 않았습니다.':'A safe explanation was used because the language check failed; understanding remains unconfirmed.',evidenceKind:'observation',textbookExplanation:options[2],showNumberLine:true};
+  return {gap:'concept',action:'concrete-example',explanation:options[0],question:options[1],observation:ko?'언어 검사로 안전한 설명을 사용했습니다. 현재 이해도는 아직 확인되지 않았습니다.':'A safe explanation was used because the language check failed; understanding remains unconfirmed.',evidenceKind:'observation',textbookExplanation:options[2],showNumberLine:concept!=='equations'};
 }
 
 async function enforceLanguage(ctx: TeacherContext, raw:TeacherOutput):Promise<TeacherOutput>{
@@ -134,9 +137,26 @@ async function codexTeacher(ctx: TeacherContext): Promise<TeacherOutput> {
 }
 
 export async function teach(ctx: TeacherContext): Promise<{ output: TeacherOutput; source: SourceMode; notice?: string }> {
-  if (ctx.requestedMode === 'replay-fixture') return { output: safeTeaching(ctx, classify(ctx.input,ctx.language)), source:'replay-fixture', notice:'Deterministic test fixture replay—no live model call.' };
-  if (process.env.WHY_MATH_OFFLINE === '1' || ctx.requestedMode === 'offline-fallback') return { output: safeTeaching(ctx, classify(ctx.input,ctx.language)), source:'offline-fallback', notice:'Deterministic offline teacher—Codex was not called.' };
-  if (ctx.requestedMode === 'ollama-local' || !ctx.requestedMode) { try { return {output:safeTeaching(ctx,await enforceLanguage(ctx,await ollamaTeacher(ctx))),source:'ollama-local'}; } catch (e) {return {output:safeTeaching(ctx,classify(ctx.input,ctx.language)),source:'offline-fallback',notice:`Local model unavailable; deterministic demonstration used: ${e instanceof Error?e.message:'unknown'}`};} }
+  if(ctx.requestedMode === 'openai-live') {
+    try {
+      const generated=await openaiTeacher(ctx);
+      if(!responseMatchesLanguage(ctx.language,generated))throw new Error('OpenAI answer language did not match lesson');
+      const output=safeTeaching(ctx,generated);
+      // A zero explanation must never be replaced by an unrelated algebraic operation.
+      if(ctx.concept==='zero' && /(?:what (?:is|does) (?:zero|0)|(?:zero|0) (?:mean|number)|0.*(?:무엇|왜|의미)|영.*숫자)/i.test(ctx.input)
+        && /(?:like terms|same variable|equation|동류항|이항|방정식)/i.test(output.explanation)) {
+        throw new Error('Model generated an unrelated math concept');
+      }
+      return {output,source:'openai-live'};
+    } catch(error) {
+      // Fail closed: DO NOT silently substitute the old faulty rule-based teacher.
+      console.error('[WhyMath] OpenAI teacher request failed:', error instanceof Error?error.name:'error');
+      throw new Error('The AI tutor is temporarily unavailable. Please try again.');
+    }
+  }
+  if (ctx.requestedMode === 'replay-fixture') return { output: safeTeaching(ctx, classify(ctx.input,ctx.language,ctx.concept)), source:'replay-fixture', notice:'Deterministic test fixture replay—no live model call.' };
+  if (process.env.WHY_MATH_OFFLINE === '1' || ctx.requestedMode === 'offline-fallback') return { output: safeTeaching(ctx, classify(ctx.input,ctx.language,ctx.concept)), source:'offline-fallback', notice:'Deterministic offline teacher—Codex was not called.' };
+  if (ctx.requestedMode === 'ollama-local' || !ctx.requestedMode) { try { return {output:safeTeaching(ctx,await enforceLanguage(ctx,await ollamaTeacher(ctx))),source:'ollama-local'}; } catch (e) {return {output:safeTeaching(ctx,classify(ctx.input,ctx.language,ctx.concept)),source:'offline-fallback',notice:`Local model unavailable; deterministic demonstration used: ${e instanceof Error?e.message:'unknown'}`};} }
   try { return { output: safeTeaching(ctx,await enforceLanguage(ctx,await codexTeacher(ctx))), source:'codex-live' }; }
-  catch (error) { const reason = error instanceof Error ? error.message.split('\n')[0] : 'model unavailable'; return { output: safeTeaching(ctx, classify(ctx.input,ctx.language)), source:'offline-fallback', notice:`Codex unavailable; deterministic teacher used. ${reason}` }; }
+  catch (error) { const reason = error instanceof Error ? error.message.split('\n')[0] : 'model unavailable'; return { output: safeTeaching(ctx, classify(ctx.input,ctx.language,ctx.concept)), source:'offline-fallback', notice:`Codex unavailable; deterministic teacher used. ${reason}` }; }
 }

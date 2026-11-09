@@ -3,7 +3,7 @@ import {mkdtemp,writeFile,readFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {SessionStore} from '../server/store';
-import {LessonService} from '../server/service';
+import {LessonService,topicFromMessage} from '../server/service';
 import {safeArithmetic} from '../server/curriculum';
 import {teach,safeTeaching,responseMatchesLanguage} from '../server/teacher';
 
@@ -154,5 +154,22 @@ describe('one-month beta data retention',()=>{
   expect(store.get(recent.id)).toBeDefined();
   const fromDisk=new SessionStore(path);await fromDisk.load();
   expect(fromDisk.count()).toBe(1);
+ });
+});
+
+describe('student question topic routing',()=>{
+ it('changes to equations only when student actually asks about equations',()=>{
+  expect(topicFromMessage('방정식에서 이항은 왜 하나요?','zero')).toBe('equations');
+  expect(topicFromMessage('Why is zero a number?','zero')).toBe('zero');
+  expect(topicFromMessage('What is the number line?','zero')).toBe('number-line');
+ });
+ it('updates the current notebook concept without erasing prior lesson notes',async()=>{
+  const {service}=await rig();
+  const session=await service.create('topic-test','Learner','ko','zero','offline-fallback');
+  const result=await service.turn(session.id,'방정식에서 이항이 왜 필요한가요?','offline-fallback');
+  expect(result.session.concept).toBe('equations');
+  expect(result.session.textbook).toHaveLength(2);
+  expect(result.session.textbook.at(-1)?.title).toBe('방정식과 이항');
+  expect(result.session.messages.at(-1)?.text).toContain('양변');
  });
 });
