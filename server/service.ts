@@ -25,6 +25,20 @@ export class LessonService {
     const session: Session = { id, learnerId, learnerLabel, isFixture, language, concept, mode: mode ?? 'offline-fallback', messages:[{id:randomUUID(),role:'teacher',text:intro,action:'teacher-start',createdAt:now()}], evidence:[], textbook:[{id:randomUUID(),concept,title:titleFor(concept,language),fact:(language==='ko'?curriculum[concept].koFacts:curriculum[concept].facts)[0],explanation:language==='ko'?'대화를 시작했어요. 이해의 증거를 모으는 중입니다.':'Lesson started. Gathering evidence of understanding.',status:'exploring',evidence:language==='ko'?'아직 확인된 답변 없음':'No response assessed yet',updatedAt:now()}], state:{vocabulary:0,concept:0,transfer:0,observations:[]}, showNumberLine:true, updatedAt:now() };
     await this.store.save(session); return session;
   }
+  async setLanguage(id: string, language: Language): Promise<Session> {
+    return this.serialize(id, async () => {
+      const session=this.store.get(id);
+      if (!session) throw new Error('Session not found');
+      session.language=language;
+      for(const entry of session.textbook){
+        entry.title=titleFor(entry.concept,language);
+        entry.fact=(language==='ko'?curriculum[entry.concept].koFacts:curriculum[entry.concept].facts)[0];
+      }
+      session.updatedAt=now();
+      await this.store.save(session);
+      return session;
+    });
+  }
   async turn(id: string, input: string, requestedMode?: SourceMode): Promise<TurnResult> {
     return this.serialize(id, async () => {
     const session = this.store.get(id); if (!session) throw new Error('Session not found');

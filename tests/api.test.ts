@@ -53,6 +53,24 @@ describe('HTTP integration: capability access boundary',()=>{
     expect((await http('/api/sessions/'+session.id+'/simulate',{},token)).code).toBe(403);
     expect((await http('/api/sessions/'+session.id+'/turns',{input:'try replay',mode:'replay-fixture'},token)).code).toBe(403);
   });
+  it('changes the persisted teaching language without resetting the learning record',async()=>{
+    const created=await http('/api/sessions',{learnerId:'human-language',learnerLabel:'Student',language:'en',mode:'offline-fallback',concept:'zero'});
+    expect(created.code).toBe(201);
+    const session=created.body.session as {id:string;messages:{text:string}[]}; const token=created.body.accessToken as string;
+    const res=await fetch(base+'/api/sessions/'+session.id+'/language',{method:'PATCH',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify({language:'ko'})});
+    expect(res.status).toBe(200);
+    const switched=await res.json();
+    expect(switched.language).toBe('ko');
+    expect(switched.textbook[0].title).toBe('0의 의미');
+    const turn=await http('/api/sessions/'+session.id+'/turns',{input:'Why zero?',mode:'offline-fallback'},token);
+    expect(turn.code).toBe(200);
+    const record=turn.body.session as {language:string;messages:{text:string}[]};
+    expect(record.language).toBe('ko');
+    expect(record.messages[0].text).toContain('zero');
+    expect(/[가-힣]/.test(record.messages.at(-1)!.text)).toBe(true);
+    const persisted=await http('/api/sessions/'+session.id,undefined,token);
+    expect((persisted.body as {language:string}).language).toBe('ko');
+  });
   it('requires explicit Test Mode for a simulated learner',async()=>{
     const forbidden=await http('/api/sessions',{learnerId:'human-2',learnerLabel:'Student',language:'en',mode:'replay-fixture'});
     expect(forbidden.code).toBe(400);

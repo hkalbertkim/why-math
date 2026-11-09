@@ -6,7 +6,7 @@
 
 **GitHub:** https://github.com/hkalbertkim/why-math
 
-**90-second demo:** [Why Math? English-narrated MP4](why-math-90s-demo.mp4)
+**90-second demo:** [Why Math? English-narrated MP4](why-math-90s-demo.mp4) · [27-shot edit list](SHOT_LIST.md) · [English narration](NARRATION.md)
 
 ## Short project description (English)
 
@@ -19,7 +19,7 @@ The hackathon prototype demonstrates a focused concept sequence around zero and 
 ## Demo claims and constraints
 
 - The teacher uses one shared adaptive teaching engine. Learner profiles are test fixtures; hidden misconceptions are not given to the teacher.
-- The demo is edited from genuine browser captures of the running application and narrated in English. It is a recorded demonstration, not a 90-second uninterrupted live run.
+- The demo uses 27 fast-cut scenes: actual browser captures of the running application, original raster PNG concept graphics, and an English voiceover. It is a recorded demonstration, not a 90-second uninterrupted live run.
 - The learners shown as A/B are AI simulations; no measured human learning gains are claimed.
 - The math demo is a narrow proof of concept and does not establish coverage of a full educational curriculum.
 - The current release is a local demo only. A public multi-user deployment requires further security, reliability and model-accuracy work.

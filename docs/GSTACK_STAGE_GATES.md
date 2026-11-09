@@ -81,3 +81,9 @@ GStack independent focused reviewer returned **PASS FOR SCOPED P0** after auth, 
 
 - **GStack scoped video presentation review PASS**, after an initial P0 BLOCK on outcome framing and missing CTA was resolved.
 - GitHub source and 90-second narrated video uploaded. **Final event form submission and external live app deployment remain unverified/not performed**. This is a video-draft pass, not overall event acceptance or pedagogical validation.
+
+## Update 2026-11-09 12:48 KST — locale and fast-cut demo
+
+- User-reported EN→KO session problem reproduced and corrected; 31/31 tests and real browser mid-session language switch passed.
+- New video cut has 27 timed PNG scenes and an original English narration explaining the origin problem and showing simulated A/B comparison. Duration ~90.08 seconds, 1280x720 H.264/AAC.
+- Review scope changed: do not inherit approval of earlier video for this new cut. Fresh scoped gStack review pending.

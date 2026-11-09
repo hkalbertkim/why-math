@@ -63,9 +63,9 @@ export function safeTeaching(ctx: TeacherContext, output: TeacherOutput): Teache
   return output;
 }
 
-function classify(input: string): TeacherOutput {
+function classify(input: string, language: Language): TeacherOutput {
   const s = input.trim().toLowerCase();
-  const ko = /[가-힣]/.test(input);
+  const ko = language === 'ko';
   const vocab = /(what.*mean|meaning|word|뜻|무슨 말|용어|모르겠)/.test(s);
   const transfer = /(-\d|below|left|temperature|지하|영하|왼쪽)/.test(s);
   const correct = false; // Keywords or numerals alone never establish correct understanding.
@@ -78,7 +78,7 @@ function classify(input: string): TeacherOutput {
 async function ollamaTeacher(ctx: TeacherContext): Promise<TeacherOutput> {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 35_000);
-  const instructions = `You are a patient adaptive math tutor. Strictly output valid JSON fields: gap (vocabulary|concept|transfer|none), action (define-term|concrete-example|number-line|transfer-check|advance), explanation, question, observation, evidenceKind (observation|correct|misconception), textbookExplanation, showNumberLine (boolean). Base facts ONLY on this reviewed mini curriculum: ${JSON.stringify(curriculum)}. Language: ${ctx.language}. Current learning objective: ${ctx.concept}. Student message: ${JSON.stringify(ctx.input)}. Previous lesson: ${JSON.stringify(ctx.history.slice(-5))}. Observed learner state: ${JSON.stringify(ctx.state)}. A student can ask a new math question; answer at an appropriate conceptual level, and check prerequisite understanding if needed. Never declare mastery based on one response or by assuming their age. If student misunderstands vocabulary, explain vocabulary; if concept, give a contrasting or visual example; if well understood, give a transfer question. Be mathematically precise. Explanation max 450 chars. Question max 160 chars. Only respond with JSON, no markdown.`;
+  const instructions = `You are a patient adaptive math tutor. Strictly output valid JSON fields: gap (vocabulary|concept|transfer|none), action (define-term|concrete-example|number-line|transfer-check|advance), explanation, question, observation, evidenceKind (observation|correct|misconception), textbookExplanation, showNumberLine (boolean). Base facts ONLY on this reviewed mini curriculum: ${JSON.stringify(curriculum)}. REQUIRED OUTPUT LANGUAGE: ${ctx.language === 'ko' ? 'Korean (한국어) ONLY: explanation, question, observation, textbookExplanation must all contain naturally written Korean sentences even if student chat history is English; never answer in English.' : 'English ONLY: explanation, question, observation and textbookExplanation must all be written in English.'}. Current learning objective: ${ctx.concept}. Student message: ${JSON.stringify(ctx.input)}. Previous lesson: ${JSON.stringify(ctx.history.slice(-5))}. Observed learner state: ${JSON.stringify(ctx.state)}. A student can ask a new math question; answer at an appropriate conceptual level, and check prerequisite understanding if needed. Never declare mastery based on one response or by assuming their age. If student misunderstands vocabulary, explain vocabulary; if concept, give a contrasting or visual example; if well understood, give a transfer question. Be mathematically precise. Explanation max 450 chars. Question max 160 chars. Only respond with JSON, no markdown.`;
   try {
     const resp = await fetch(process.env.OLLAMA_URL || 'http://127.0.0.1:11434/api/generate', {
       method: 'POST', headers: {'Content-Type':'application/json'}, signal:controller.signal,
@@ -90,19 +90,53 @@ async function ollamaTeacher(ctx: TeacherContext): Promise<TeacherOutput> {
   } finally { clearTimeout(timeout); }
 }
 
+// The saved session locale, not the text of the last question, controls output language.
+export function responseMatchesLanguage(language: Language, output: TeacherOutput): boolean {
+  const fields=[output.explanation,output.question,output.observation,output.textbookExplanation];
+  if(language==='ko')return fields.every(v=>/[가-힣]/.test(v));
+  return fields.every(v=>!/[가-힣]/.test(v));
+}
+
+function safeLocalizedFallback(ctx: TeacherContext): TeacherOutput {
+  const ko=ctx.language==='ko';
+  const concept=ctx.concept;
+  const options={
+    zero:{ko:['0은 숫자입니다. 아무것도 없다는 수량을 0으로 나타낼 수 있고, 수직선에도 0의 위치가 있습니다.','바구니에 사과가 한 개도 없을 때 숫자로 어떻게 표현할까요?','0은 수량이 없음을 나타내는 숫자입니다.'],en:['Zero is a number. It can represent no objects and has its own location on the number line.','How do we write the number of apples in an empty basket?','Zero is a number that can represent an empty quantity.']},
+    'number-line':{ko:['수직선에서 수는 오른쪽으로 갈수록 커지고 왼쪽으로 갈수록 작아집니다.','0의 왼쪽에 있는 수 -2와 오른쪽에 있는 수 2 중 어느 쪽이 더 클까요?','수직선에서 오른쪽에 있는 수가 더 큽니다.'],en:['Numbers increase to the right and decrease to the left on a number line.','Which is greater, -2 on the left of zero or 2 on the right?','Numbers increase toward the right of the number line.']},
+    'negative-numbers':{ko:['음수는 0보다 작은 수입니다. 수직선에서는 0의 왼쪽에 표시합니다.','0보다 왼쪽에 있는 -3과 -1 중 어느 수가 더 클까요?','음수는 0보다 작고 수직선의 왼쪽에 있습니다.'],en:['Negative numbers are less than zero and appear to its left on the number line.','Which is greater on the number line, -3 or -1?','Negative numbers are less than zero.']}
+  }[concept][ctx.language];
+  return {gap:'concept',action:'concrete-example',explanation:options[0],question:options[1],observation:ko?'언어 검사로 안전한 설명을 사용했습니다. 현재 이해도는 아직 확인되지 않았습니다.':'A safe explanation was used because the language check failed; understanding remains unconfirmed.',evidenceKind:'observation',textbookExplanation:options[2],showNumberLine:true};
+}
+
+async function enforceLanguage(ctx: TeacherContext, raw:TeacherOutput):Promise<TeacherOutput>{
+  if(responseMatchesLanguage(ctx.language,raw))return raw;
+  // One bounded correction pass using the same local model, without changing the math claim.
+  const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),18000);
+  try{
+    const prompt=`Translate the TEXT VALUES of this JSON object to ${ctx.language==='ko'?'natural Korean (한국어) only':'English only'}. Keep all keys, enum values, boolean, math symbols, quantities and pedagogical meaning unchanged. Only translate explanation, question, observation, textbookExplanation. NO added math claims. Return valid JSON exactly. ${JSON.stringify(raw)}`;
+    const result=await fetch(process.env.OLLAMA_URL||'http://127.0.0.1:11434/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},signal:controller.signal,body:JSON.stringify({model:process.env.OLLAMA_MODEL||'gemma3:4b',prompt,stream:false,format:jsonSchema,options:{temperature:0,num_predict:520}})});
+    if(!result.ok)throw Error(`Locale correction failed: ${result.status}`);
+    const parsed=await result.json() as {response:string};
+    const output=teacherOutputSchema.parse(JSON.parse(parsed.response));
+    if(responseMatchesLanguage(ctx.language,output))return output;
+  }catch{}
+  finally{clearTimeout(timeout)}
+  return safeLocalizedFallback(ctx);
+}
+
 async function codexTeacher(ctx: TeacherContext): Promise<TeacherOutput> {
   const dir = await mkdtemp(join(tmpdir(), 'why-math-'));
   const schema = join(dir, 'schema.json'); const output = join(dir, 'output.json');
   await writeFile(schema, JSON.stringify(jsonSchema));
-  const prompt = `You are the Why Math teacher engine. Return only schema-valid JSON. Teach only this reviewed curriculum: ${JSON.stringify(curriculum)}. Current concept: ${ctx.concept}. Language: ${ctx.language}. Learner message: ${JSON.stringify(ctx.input)}. Prior messages: ${JSON.stringify(ctx.history.slice(-6))}. Learner state (observations, not age): ${JSON.stringify(ctx.state)}. Never mention or infer a simulated persona. Never claim mastery from one response. Choose a useful adaptive action. Mathematical claims must stay inside the curriculum. Include one explanation and one question in the requested language. A number line is appropriate for direction, zero, or negatives.`;
+  const prompt = `You are the Why Math teacher engine. Return only schema-valid JSON. Teach only this reviewed curriculum: ${JSON.stringify(curriculum)}. Current concept: ${ctx.concept}. REQUIRED LANGUAGE: ${ctx.language==='ko'?'Korean only (한국어): no English explanations even when history is English':'English only'}. Learner message: ${JSON.stringify(ctx.input)}. Prior messages: ${JSON.stringify(ctx.history.slice(-6))}. Learner state (observations, not age): ${JSON.stringify(ctx.state)}. Never mention or infer a simulated persona. Never claim mastery from one response. Choose a useful adaptive action. Mathematical claims must stay inside the curriculum. Include one explanation and one question in the requested language. A number line is appropriate for direction, zero, or negatives.`;
   await execFileAsync('codex', ['exec','--ephemeral','--sandbox','read-only','--skip-git-repo-check','--output-schema',schema,'--output-last-message',output,prompt], { timeout: 60_000, maxBuffer: 1024 * 1024 });
   return teacherOutputSchema.parse(JSON.parse(await readFile(output, 'utf8')));
 }
 
 export async function teach(ctx: TeacherContext): Promise<{ output: TeacherOutput; source: SourceMode; notice?: string }> {
-  if (ctx.requestedMode === 'replay-fixture') return { output: safeTeaching(ctx, classify(ctx.input)), source:'replay-fixture', notice:'Deterministic test fixture replay—no live model call.' };
-  if (process.env.WHY_MATH_OFFLINE === '1' || ctx.requestedMode === 'offline-fallback') return { output: safeTeaching(ctx, classify(ctx.input)), source:'offline-fallback', notice:'Deterministic offline teacher—Codex was not called.' };
-  if (ctx.requestedMode === 'ollama-local' || !ctx.requestedMode) { try { return {output:safeTeaching(ctx,await ollamaTeacher(ctx)),source:'ollama-local'}; } catch (e) {return {output:safeTeaching(ctx,classify(ctx.input)),source:'offline-fallback',notice:`Local model unavailable; deterministic demonstration used: ${e instanceof Error?e.message:'unknown'}`};} }
-  try { return { output: safeTeaching(ctx,await codexTeacher(ctx)), source:'codex-live' }; }
-  catch (error) { const reason = error instanceof Error ? error.message.split('\n')[0] : 'model unavailable'; return { output: safeTeaching(ctx, classify(ctx.input)), source:'offline-fallback', notice:`Codex unavailable; deterministic teacher used. ${reason}` }; }
+  if (ctx.requestedMode === 'replay-fixture') return { output: safeTeaching(ctx, classify(ctx.input,ctx.language)), source:'replay-fixture', notice:'Deterministic test fixture replay—no live model call.' };
+  if (process.env.WHY_MATH_OFFLINE === '1' || ctx.requestedMode === 'offline-fallback') return { output: safeTeaching(ctx, classify(ctx.input,ctx.language)), source:'offline-fallback', notice:'Deterministic offline teacher—Codex was not called.' };
+  if (ctx.requestedMode === 'ollama-local' || !ctx.requestedMode) { try { return {output:safeTeaching(ctx,await enforceLanguage(ctx,await ollamaTeacher(ctx))),source:'ollama-local'}; } catch (e) {return {output:safeTeaching(ctx,classify(ctx.input,ctx.language)),source:'offline-fallback',notice:`Local model unavailable; deterministic demonstration used: ${e instanceof Error?e.message:'unknown'}`};} }
+  try { return { output: safeTeaching(ctx,await enforceLanguage(ctx,await codexTeacher(ctx))), source:'codex-live' }; }
+  catch (error) { const reason = error instanceof Error ? error.message.split('\n')[0] : 'model unavailable'; return { output: safeTeaching(ctx, classify(ctx.input,ctx.language)), source:'offline-fallback', notice:`Codex unavailable; deterministic teacher used. ${reason}` }; }
 }

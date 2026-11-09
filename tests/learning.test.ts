@@ -5,7 +5,7 @@ import {join} from 'node:path';
 import {SessionStore} from '../server/store';
 import {LessonService} from '../server/service';
 import {safeArithmetic} from '../server/curriculum';
-import {teach,safeTeaching} from '../server/teacher';
+import {teach,safeTeaching,responseMatchesLanguage} from '../server/teacher';
 
 async function rig(){const dir=await mkdtemp(join(tmpdir(),'why-math-test-'));const path=join(dir,'sessions.json');const store=new SessionStore(path);return {store,path,service:new LessonService(store)}}
 describe('Why Math core learning loop',()=>{
@@ -126,5 +126,17 @@ describe('grounded zero curriculum fact',()=>{
   expect(result.explanation).toContain('Zero is a number');
   expect(result.action).not.toBe('advance');
   expect(result.textbookExplanation).not.toContain('not really a number');
+ });
+});
+
+describe('localized teaching guard',()=>{
+ const output={gap:'concept' as const,action:'concrete-example' as const,explanation:'Zero is a number.',question:'Why?',observation:'Needs help.',evidenceKind:'observation' as const,textbookExplanation:'Zero is a number.',showNumberLine:true};
+ it('rejects English paragraphs for Korean lessons',()=>{
+  expect(responseMatchesLanguage('ko',output)).toBe(false);
+  expect(responseMatchesLanguage('en',output)).toBe(true);
+ });
+ it('does not infer output language from learner message alone',async()=>{
+  const result=await teach({language:'ko',concept:'zero',input:'I do not understand zero.',history:[],state:{vocabulary:0,concept:0,transfer:0,observations:[]},requestedMode:'offline-fallback'});
+  expect(responseMatchesLanguage('ko',result.output)).toBe(true);
  });
 });

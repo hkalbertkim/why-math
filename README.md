@@ -15,7 +15,7 @@ Built for the **c0mpiled-17 Seoul hackathon — The Primer**, November 9, 2026.
 
 ## 90-second hackathon demo
 
-[Watch or download the English-narrated demonstration](demo/why-math-90s-demo.mp4) · [Submission description](demo/SUBMISSION.md) · [Narration and timing](demo/NARRATION.md). The video includes real English/Korean app captures and clearly labeled simulated learners; it is not a claim of proven learning outcomes.
+[Watch or download the English-narrated demonstration](demo/why-math-90s-demo.mp4) · [Submission description](demo/SUBMISSION.md) · [Narration and timing](demo/NARRATION.md). The 27-cut video explains why the project exists (fixed lessons, formula memorization without understanding), compares two same-age simulated learners, includes actual Korean/English app captures, 3D PNG math illustrations, and English narration; it is not a claim of proven learning outcomes.
 
 ## Product preview
 
@@ -55,7 +55,7 @@ Target deliverables: working app, GitHub repository, 90-second English presentat
 
 ## Development status
 
-**Working hackathon MVP (November 9, 2026).** React/Vite UI and Express API, guided and free entry, Ollama-powered Korean/English lessons, three test-only AI learners, automatic Living Textbook updates, and local session persistence are implemented. The teacher uses a small reviewed concept map (zero, number line, negative numbers), not a complete curriculum. Mathematical accuracy, user learning outcomes, general-topic routing, cloud security and production scale are **not validated**. The Codex CLI path may time out and is experimental; the offline fallback is explicitly labeled. A first interactive PNG/transparent-sprite counting scene and an English-narrated 90-second demo video are delivered. Additional lesson visuals, GIFs, formal account systems and general math curriculum coverage remain future work.
+**Working hackathon MVP (November 9, 2026).** React/Vite UI and Express API, guided and free entry, Ollama-powered Korean/English lessons (including mid-session language switching), three test-only AI learners, automatic Living Textbook updates, and local session persistence are implemented. The teacher uses a small reviewed concept map (zero, number line, negative numbers), not a complete curriculum. Mathematical accuracy, user learning outcomes, general-topic routing, cloud security and production scale are **not validated**. The Codex CLI path may time out and is experimental; the offline fallback is explicitly labeled. A first interactive PNG/transparent-sprite counting scene and an English-narrated 90-second demo video are delivered. Additional lesson visuals, GIFs, formal account systems and general math curriculum coverage remain future work.
 
 ### Run on MSM2-1
 

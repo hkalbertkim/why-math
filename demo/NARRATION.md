@@ -1,14 +1,17 @@
-# Why Math? — 90-second English demo narration
+# Why Math? — Fast-cut Product Demo (English narration)
 
-| Time | Narration |
+27 raster scenes, 90 seconds. Student A/B are AI simulations, not human outcome claims.
+
+| Time | English narration |
 |---|---|
-| 00–10s | Millions of students are taught the same lesson at the same pace. Those who do not understand are expected to catch up. Why Math reverses that expectation. |
-| 10–22s | Our AI teacher starts with a basic math concept. No perfectly worded question required. The student responds, and the teacher chooses what to explain next. |
-| 22–36s | This is student A, a simulated fourteen-year-old learner who struggles with mathematical vocabulary. The teacher sees the student response, not the hidden test profile or misconception labels. |
-| 36–50s | Student B is the same age but has a different difficulty. The same teacher engine responds differently, finding examples that fit the conversation. These are simulations, not human learning outcomes. |
-| 50–63s | Why Math works in Korean too. A learner asks why zero is a number. The teacher explains, while the record marks the question as an observation, not a failure. |
-| 63–73s | Learning can be visual and interactive. Here, students add and remove apples to see quantity change. At zero, an empty basket still has a number. |
-| 73–81s | The Living Textbook writes itself, recording lesson explanations, student observations, and questions that the system still needs to check. |
-| 81–90s | One teacher. Different paths to understanding. Try Why Math. Explore the working prototype and code on GitHub today. |
+| 00–10s | Fixed lessons fail students who fall behind. We memorize formulas without knowing why they work. An infinitely patient AI can adapt explanations instead of forcing every student to adapt. |
+| 10–22s | Why Math changes this. The AI teacher begins a lesson, even if you do not know what to ask. It listens, explains, and checks your understanding before choosing the next step. |
+| 22–46s | Compare two simulated fourteen-year-old students starting from the same lesson. Student A struggles with mathematical vocabulary. The teacher explains the words first. Student B has a different misconception, so the same teacher offers a different example. These are real model-generated responses, not prewritten lessons for each age. The teacher never sees the hidden student test profiles. |
+| 46–59s | The tutor also teaches in Korean. Students can switch languages without losing their learning record. A question is not an error. Why Math records uncertainty, then explains again. The learning record stays with the student. |
+| 59–72s | Math should be visual. Add an apple, then remove it. Watch the count change. These are real PNG images in an interactive lesson. An empty basket has zero apples. Now the abstract number has a visible meaning. |
+| 72–83s | The Living Textbook updates automatically with each explanation, student response, and open question. Students can revisit ideas without taking extra notes. One correct answer does not prove mastery. |
+| 83–90s | Same mathematics. Different paths to understanding. Try Why Math. Find the demo and code on GitHub. |
 
-The AI student captures show simulated learners. The recorded live Ollama outputs are real app captures, not evidence of human learning gains.
+## Visual editing rule
+
+All stills are rendered PNG rasters, sourced from actual app captures and PNG-composited educational assets. No SVG teaching illustrations are used. Fast cuts are matched to narration. Labels distinguish simulations from real students.
