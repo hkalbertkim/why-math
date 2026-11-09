@@ -17,6 +17,10 @@ Built for the **c0mpiled-17 Seoul hackathon — The Primer**, November 9, 2026.
 
 [Watch or download the English-narrated fast-cut demonstration](demo/why-math-90s-demo.mp4) · [Submission description](demo/SUBMISSION.md) · [Narration and timing](demo/NARRATION.md). The 27-cut video explains why the project exists (fixed lessons, formula memorization without understanding), compares two same-age simulated learners, includes actual Korean/English app captures, 3D PNG math illustrations, and expressive English narration; it is not a claim of proven learning outcomes.
 
+## Presentation package (without the real browser footage)
+
+The [presentation kit](demo/presentation-kit/README.md) includes the approved 72-second English narration (WAV and M4A), original PNG opening and ending cards, transparent lower-third captions, pitch copy, presenter notes, English SRT/WebVTT captions and the precise edit timeline. **Fourteen actual browser-recording segments are intentionally missing.** The final assembler refuses to render substitute footage. [Download the complete kit ZIP](demo/why-math-presentation-kit.zip).
+
 ## Product preview
 
 The teacher leads a lesson; a learner can answer, ask, or explore. Its Living Textbook updates automatically. The first interactive visual is an illustrated counting exercise assembled from PNG layers.

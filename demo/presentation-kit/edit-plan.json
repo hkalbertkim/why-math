@@ -1,0 +1,136 @@
+{
+  "duration_seconds": 72,
+  "canvas": "1920x1080",
+  "fps": 30,
+  "rule": "Only ARTS are authored raster cards. CAPTURE shots require real browser video; NEVER substitute screenshots or synthetic UI.",
+  "shots": [
+    {
+      "start": 0.0,
+      "end": 2.6,
+      "type": "ART_OPEN",
+      "id": "opening",
+      "overlay": null,
+      "action": "Open in 2.6 seconds; no ten-second logo hold"
+    },
+    {
+      "start": 2.6,
+      "end": 9.0,
+      "type": "CAPTURE",
+      "id": "home_and_start",
+      "overlay": "teacher",
+      "action": "Actual home screen, click Start with zero, teacher opens"
+    },
+    {
+      "start": 9.0,
+      "end": 13.0,
+      "type": "CAPTURE",
+      "id": "guided_start",
+      "overlay": "teacher",
+      "action": "Teacher-first lesson begins, no learner prompt"
+    },
+    {
+      "start": 13.0,
+      "end": 18.0,
+      "type": "CAPTURE",
+      "id": "teacher_question",
+      "overlay": "teacher",
+      "action": "Zoom into real teacher question and composer"
+    },
+    {
+      "start": 18.0,
+      "end": 23.0,
+      "type": "CAPTURE",
+      "id": "learner_a_question",
+      "overlay": "student_a",
+      "action": "Student A simulated answer typed/auto responded, no fabricated dialog"
+    },
+    {
+      "start": 23.0,
+      "end": 28.0,
+      "type": "CAPTURE",
+      "id": "learner_a_teacher",
+      "overlay": "student_a",
+      "action": "Actual generated teacher explanation; show adaptive action"
+    },
+    {
+      "start": 28.0,
+      "end": 33.0,
+      "type": "CAPTURE",
+      "id": "learner_b_question",
+      "overlay": "student_b",
+      "action": "Independent B session with same start; reveals different gap"
+    },
+    {
+      "start": 33.0,
+      "end": 37.0,
+      "type": "CAPTURE",
+      "id": "learner_b_teacher",
+      "overlay": "student_b",
+      "action": "Teacher response and action differs; no age-based preset"
+    },
+    {
+      "start": 37.0,
+      "end": 41.0,
+      "type": "CAPTURE",
+      "id": "live_ab_split",
+      "overlay": "comparison",
+      "action": "Side-by-side two real screen recordings, not app-mimicking graphic"
+    },
+    {
+      "start": 41.0,
+      "end": 47.0,
+      "type": "CAPTURE",
+      "id": "korean_live",
+      "overlay": "korean",
+      "action": "Change language and show actual Korean response; allow edit speed-up"
+    },
+    {
+      "start": 47.0,
+      "end": 51.0,
+      "type": "CAPTURE",
+      "id": "apple_add",
+      "overlay": "visual",
+      "action": "Live PNG apple counter: 0→1→2; cursor visible"
+    },
+    {
+      "start": 51.0,
+      "end": 55.0,
+      "type": "CAPTURE",
+      "id": "apple_remove",
+      "overlay": "visual",
+      "action": "Actual click remove: 2→1→0, end on zero"
+    },
+    {
+      "start": 55.0,
+      "end": 60.0,
+      "type": "CAPTURE",
+      "id": "living_textbook_a",
+      "overlay": "textbook",
+      "action": "Real learner A textbook and observation, no mastery claims"
+    },
+    {
+      "start": 60.0,
+      "end": 65.0,
+      "type": "CAPTURE",
+      "id": "living_textbook_b",
+      "overlay": "textbook",
+      "action": "Real learner B textbook; compare evidence, not outcome score"
+    },
+    {
+      "start": 65.0,
+      "end": 69.0,
+      "type": "CAPTURE",
+      "id": "app_close",
+      "overlay": "comparison",
+      "action": "Actual app main interface with two learner paths; GitHub CTA narration"
+    },
+    {
+      "start": 69.0,
+      "end": 72.0,
+      "type": "ART_END",
+      "id": "ending",
+      "overlay": null,
+      "action": "Short CTA card; final real app capture can precede it"
+    }
+  ]
+}

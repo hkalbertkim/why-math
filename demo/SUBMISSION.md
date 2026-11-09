@@ -30,3 +30,7 @@ The hackathon prototype demonstrates a focused concept sequence around zero and 
 - Confirm repo content and README accuracy.
 - Keep the 90-second video under the organizers' two-minute maximum.
 - Obtain the official submission form through event organizers; no form submission was performed by this repository script.
+
+## Presentation package status
+
+The [presentation kit](presentation-kit/README.md) contains all non-UI materials, voiceover, subtitles, pitch, intro/outro raster PNG videos, and the exact real-capture slot plan. The video in this repository currently is an **older rapid montage** assembled from app screenshots rather than a completed continuous real UI video. The final real-browser-only recording is **not ready**; do not submit or label the montage as that.

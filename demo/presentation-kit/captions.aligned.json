@@ -1,0 +1,145 @@
+{
+  "source": "manual clause alignment to existing TTS stem speech pauses (ffmpeg silencedetect), reviewed 2026-11-09",
+  "cues": [
+    {
+      "start": 0,
+      "end": 2.76,
+      "text": "For years, students have had to adapt to the lesson."
+    },
+    {
+      "start": 2.76,
+      "end": 4.02,
+      "text": "Memorize a formula."
+    },
+    {
+      "start": 4.02,
+      "end": 5.54,
+      "text": "Follow the steps."
+    },
+    {
+      "start": 5.54,
+      "end": 7.78,
+      "text": "Move on — even when it never clicks."
+    },
+    {
+      "start": 9,
+      "end": 11.5,
+      "text": "What if the lesson could adapt instead?"
+    },
+    {
+      "start": 11.5,
+      "end": 14.47,
+      "text": "Why Math begins teaching, listens to the student,"
+    },
+    {
+      "start": 14.47,
+      "end": 16.68,
+      "text": "and changes the next explanation."
+    },
+    {
+      "start": 18,
+      "end": 19.98,
+      "text": "Here are two simulated students."
+    },
+    {
+      "start": 19.98,
+      "end": 21.28,
+      "text": "Both fourteen."
+    },
+    {
+      "start": 21.28,
+      "end": 23.88,
+      "text": "Both starting from the same math idea."
+    },
+    {
+      "start": 23.88,
+      "end": 26.29,
+      "text": "Student A needs the words explained."
+    },
+    {
+      "start": 26.29,
+      "end": 29.09,
+      "text": "Student B has a different misunderstanding."
+    },
+    {
+      "start": 29.09,
+      "end": 32.73,
+      "text": "One AI teacher responds to what each student actually says."
+    },
+    {
+      "start": 32.73,
+      "end": 34.92,
+      "text": "It does not see their hidden test profiles."
+    },
+    {
+      "start": 37,
+      "end": 39.47,
+      "text": "The same teacher works in Korean, too."
+    },
+    {
+      "start": 39.47,
+      "end": 41.39,
+      "text": "Questions are not failures."
+    },
+    {
+      "start": 41.39,
+      "end": 45.57,
+      "text": "When a learner is unsure, the lesson explains rather than rushing ahead."
+    },
+    {
+      "start": 47,
+      "end": 48.89,
+      "text": "Some ideas are easier to see."
+    },
+    {
+      "start": 48.89,
+      "end": 50.37,
+      "text": "Add an apple."
+    },
+    {
+      "start": 50.37,
+      "end": 52.25,
+      "text": "Take it away. Now the basket is empty."
+    },
+    {
+      "start": 52.25,
+      "end": 53.94,
+      "text": "That quantity has a name: zero."
+    },
+    {
+      "start": 55,
+      "end": 57.45,
+      "text": "Your Living Textbook grows automatically,"
+    },
+    {
+      "start": 57.45,
+      "end": 59.19,
+      "text": "saving the explanations, questions,"
+    },
+    {
+      "start": 59.19,
+      "end": 61.79,
+      "text": "and what still needs checking —"
+    },
+    {
+      "start": 61.79,
+      "end": 63.59,
+      "text": "not inventing mastery scores."
+    },
+    {
+      "start": 65,
+      "end": 66.22,
+      "text": "Same mathematics."
+    },
+    {
+      "start": 66.22,
+      "end": 68.79,
+      "text": "Different minds. A path that adapts to you."
+    },
+    {
+      "start": 68.79,
+      "end": 70.5,
+      "text": "Explore Why Math on GitHub."
+    }
+  ]
+}
