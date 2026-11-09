@@ -10,7 +10,7 @@ Built for the **c0mpiled-17 Seoul hackathon — The Primer**, November 9, 2026.
 
 - [What we're building](#what-were-building) — the product experience
 - [Hackathon demo](#hackathon-demo) — the smallest proof
-- [Project documentation](#project-documentation) — product brief and scope
+- [Project documentation](#project-documentation) — product brief, scope, and development workflow
 - [Development status](#development-status) — what is and isn't implemented
 
 ## What we're building
@@ -33,6 +33,7 @@ Target deliverables: working app, GitHub repository, 90-second English presentat
 
 - [Product brief](docs/PRODUCT_BRIEF.md)
 - [Hackathon scope and acceptance checks](docs/HACKATHON_SCOPE.md)
+- [Development workflow and adaptive UI specification](docs/DEVELOPMENT_WORKFLOW.md)
 
 ## Development status
 

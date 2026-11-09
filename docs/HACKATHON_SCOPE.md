@@ -1,11 +1,17 @@
 # c0mpiled-17 Seoul — Hackathon Scope
 
 **Date:** 2026-11-09 (KST)
-**Track:** The Primer
+**Track:** The Primer (hackathon example; the product serves learners of all ages)
 **Build window:** 10:00–15:00 KST
 **Video:** 90 seconds, English narration, showing Korean and English student lessons when functional
 **Submission:** GitHub URL, short description, demo video
 **Judging language:** English
+
+## Product audience and interface
+
+Why Math? is for anyone seeking mathematical understanding: children, struggling students, formula memorizers, university students, and adult returners. The AI teacher adapts both instruction and presentation to actual understanding. Visual, playful, accessible interfaces are available to all ages; formal, denser explanations are available when appropriate. Age is a starting clue, never a mastery verdict.
+
+See [Development Workflow](DEVELOPMENT_WORKFLOW.md) for gStack stages and acceptance checks.
 
 ## Required live behavior
 
