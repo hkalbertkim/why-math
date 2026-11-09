@@ -6,7 +6,7 @@
 
 **GitHub:** https://github.com/hkalbertkim/why-math
 
-**90-second demo:** [Why Math? English-narrated MP4](why-math-90s-demo.mp4) · [27-shot edit list](SHOT_LIST.md) · [English narration](NARRATION.md)
+**Hackathon demo (72 seconds, under the 90-second limit):** [Why Math? English-narrated MP4](why-math-90s-demo.mp4) · [27-shot edit list](SHOT_LIST.md) · [English narration](NARRATION.md)
 
 ## Short project description (English)
 

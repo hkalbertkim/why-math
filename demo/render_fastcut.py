@@ -4,7 +4,7 @@ All on-screen student test results are labeled simulated; no fake outcomes or ma
 """
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageOps
-import subprocess, math, textwrap
+import subprocess, math, textwrap, sys
 ROOT=Path(__file__).resolve().parents[1]; DEMO=ROOT/'demo'; TMP=Path('/tmp/why-math-fastcut'); TMP.mkdir(exist_ok=True)
 W,H=1280,720
 FG=(24,51,42); GREEN=(29,108,83); CREAM=(247,244,236); LIME=(217,242,91); MUTED=(94,113,103)
@@ -127,6 +127,9 @@ for duration,_,description in shots:
 (DEMO/'SHOT_LIST.md').write_text('\n'.join(shot_lines)+'\n')
 
 for i,(duration,im,desc) in enumerate(shots):im.save(TMP/f'shot{i:02}.png',optimize=True)
+if '--shots-only' in sys.argv:
+    print('PNG scenes ready')
+    raise SystemExit(0)
 # A quiet underlying pulse, so audio is not clipped or jarring. Narration is foreground.
 voice_segments=[
  (0,10,'Fixed lessons fail students who fall behind. We memorize formulas without knowing why they work. An infinitely patient AI can adapt explanations instead of forcing every student to adapt.'),

@@ -13,9 +13,9 @@ Built for the **c0mpiled-17 Seoul hackathon — The Primer**, November 9, 2026.
 - [Project documentation](#project-documentation) — product brief, scope, and development workflow
 - [Development status](#development-status) — what is and isn't implemented
 
-## 90-second hackathon demo
+## Hackathon demo (under 90 seconds)
 
-[Watch or download the English-narrated demonstration](demo/why-math-90s-demo.mp4) · [Submission description](demo/SUBMISSION.md) · [Narration and timing](demo/NARRATION.md). The 27-cut video explains why the project exists (fixed lessons, formula memorization without understanding), compares two same-age simulated learners, includes actual Korean/English app captures, 3D PNG math illustrations, and English narration; it is not a claim of proven learning outcomes.
+[Watch or download the English-narrated fast-cut demonstration](demo/why-math-90s-demo.mp4) · [Submission description](demo/SUBMISSION.md) · [Narration and timing](demo/NARRATION.md). The 27-cut video explains why the project exists (fixed lessons, formula memorization without understanding), compares two same-age simulated learners, includes actual Korean/English app captures, 3D PNG math illustrations, and expressive English narration; it is not a claim of proven learning outcomes.
 
 ## Product preview
 
