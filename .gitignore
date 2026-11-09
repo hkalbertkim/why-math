@@ -14,3 +14,8 @@ coverage/
 
 # Runtime student test sessions
 data/
+
+# Captured live browser raw footage and intermediate edits (host-only)
+demo/presentation-kit/recordings/
+demo/presentation-kit/recorded-render-cache/
+demo/presentation-kit/why-math-final-live-demo.mp4

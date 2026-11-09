@@ -1,36 +1,11 @@
-# c0mpiled-17 Seoul — Why Math? submission
+# Why Math? — Final submission
 
-**Project name:** Why Math?
-
-**Track:** The Primer
+**Demo (96s):** [Final real-browser demo](why-math-final-demo-96s.mp4) · [Direct MP4](https://raw.githubusercontent.com/hkalbertkim/why-math/main/demo/why-math-final-demo-96s.mp4)
 
 **GitHub:** https://github.com/hkalbertkim/why-math
 
-**Hackathon demo (72 seconds, under the 90-second limit):** [Why Math? English-narrated MP4](why-math-90s-demo.mp4) · [27-shot edit list](SHOT_LIST.md) · [English narration](NARRATION.md)
+**Separate English narration:** [MP3](why-math-english-narration-96s.mp3) · [M4A](why-math-english-narration-96s.m4a)
 
-## Short project description (English)
+**Source and disclosure:** [Video QC](FINAL_VIDEO_QC.md) · [Narration transcript](NARRATION_96S.md)
 
-For generations, education has asked students to adapt to the same lesson. Why Math? turns that around. It is an AI-led, adaptive mathematics tutor that begins with a guided concept or a learner's free-form question, observes their actual responses, and generates the next explanation and teaching activity for their understanding. As lessons evolve, a personalized Living Textbook forms automatically.
-
-The hackathon prototype demonstrates a focused concept sequence around zero and negative numbers, Korean and English lessons using a live local AI model, an interactive PNG-based counting scene, and three independent simulated test learners. The test learners are only a QA/demo tool, not a product user mode or proof of learning effectiveness.
-
-**One-liner:** An infinitely patient AI tutor that adapts the lesson to the student—not the student to the lesson.
-
-## Demo claims and constraints
-
-- The teacher uses one shared adaptive teaching engine. Learner profiles are test fixtures; hidden misconceptions are not given to the teacher.
-- The demo uses 27 fast-cut scenes: actual browser captures of the running application, original raster PNG concept graphics, and an English voiceover. It is a recorded demonstration, not a 90-second uninterrupted live run.
-- The learners shown as A/B are AI simulations; no measured human learning gains are claimed.
-- The math demo is a narrow proof of concept and does not establish coverage of a full educational curriculum.
-- The current release is a local demo only. A public multi-user deployment requires further security, reliability and model-accuracy work.
-
-## Required before submission
-
-- Confirm final MP4 playback and audio.
-- Confirm repo content and README accuracy.
-- Keep the 90-second video under the organizers' two-minute maximum.
-- Obtain the official submission form through event organizers; no form submission was performed by this repository script.
-
-## Presentation package status
-
-The [presentation kit](presentation-kit/README.md) contains all non-UI materials, voiceover, subtitles, pitch, intro/outro raster PNG videos, and the exact real-capture slot plan. The video in this repository currently is an **older rapid montage** assembled from app screenshots rather than a completed continuous real UI video. The final real-browser-only recording is **not ready**; do not submit or label the montage as that.
+The prototype shows one AI math tutor helping two explicitly simulated students of the same age from the same starting topic, with different model-generated replies, a genuine Korean language switch, interactive PNG counting and an automatic math notebook. Video contains real edited browser footage, not synthetic app scenes. It does **not** demonstrate better human learning outcomes or universal math accuracy.
