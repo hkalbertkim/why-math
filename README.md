@@ -56,6 +56,7 @@ Target deliverables: working app, GitHub repository, 90-second English presentat
 - [Development workflow and adaptive UI specification](docs/DEVELOPMENT_WORKFLOW.md)
 - [gStack stage gates and quality evidence](docs/GSTACK_STAGE_GATES.md)
 - [Latest build and QA checkpoint](docs/checkpoints/2026-11-09_MVP_P0_QA.md)
+- [Final local UI QC, Korean/English and mobile](docs/checkpoints/2026-11-09_FINAL_UI_QC.md)
 - [Visual asset policy](docs/VISUAL_ASSET_POLICY.md)
 - [Image attribution and sources](docs/ASSET_SOURCES.md)
 

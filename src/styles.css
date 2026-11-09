@@ -67,3 +67,11 @@
 @media(max-width:800px){.counting-reflection>button{min-height:50px}.book-fact-banner strong{font-size:16px}}
 
 .demo-settings summary:focus-visible,.teaching-notes summary:focus-visible{outline:3px solid #5eaa8d;outline-offset:-3px;border-radius:12px}
+
+/* Final mobile bridge: a new lesson observation is visible without forcing tab navigation. */
+.textbook-updated-link{display:flex;align-items:center;gap:10px;width:min(100%,650px);margin:8px auto 18px;padding:13px 17px;min-height:48px;border:1px solid #cbe0c9;background:#eaf4e7;border-radius:13px;color:#22563c;text-align:left;font-weight:700;font-size:12px}
+.textbook-updated-link>span{font-size:19px;color:#478d52}
+.textbook-updated-link>strong{margin-left:auto;font-size:18px}
+.textbook-updated-link:focus-visible{outline:3px solid #5eaa8d;outline-offset:2px}
+.textbook-new-dot{color:#25865f;font-size:21px;line-height:0;display:inline-block;margin-left:5px}
+@media(max-width:800px){.textbook-updated-link{margin-top:13px;margin-bottom:12px;font-size:12px}.mobile-tabs{position:sticky;top:0;z-index:3;height:48px}}
