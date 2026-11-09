@@ -39,3 +39,7 @@ The students are **simulations**, not human learners. No tested learning gains o
 ## Submission status
 
 Final video and GitHub URLs are ready to submit. **No external event form or YouTube/Loom upload was performed in this workflow.**
+
+## Visual production correction (2026-11-09)
+
+The prior 96-second edit erroneously used generic green title cards and re-entered source footage out of order. The corrected video replaces those cards with the **four original existing navy/purple/blue 3D illustration slides** extracted from the existing storyboard PPTX: 01, 09, 14 and 18. The other 14 slots use actual live Chrome browser recordings, assembled in chronological order with no synthetic UI. A/B is shown with authentic side-by-side recordings. See `demo/presentation-kit/original_18slide_edit_evidence.json`. No subtitle track is included. The unchanged approved English narration is available separately as MP3/M4A.

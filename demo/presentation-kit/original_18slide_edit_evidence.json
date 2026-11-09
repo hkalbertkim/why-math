@@ -1,0 +1,151 @@
+{
+  "source": "EXISTING 4K slide PNG artwork from PPTX (delivered as lossily compressed 1280x720 frames) + actual recorded Chrome app clips",
+  "audio": "approved original 96-second storyteller narration",
+  "subtitle": false,
+  "slides": [
+    {
+      "slide": "01",
+      "start": 0,
+      "end": 2.5,
+      "kind": "art",
+      "source": 1,
+      "output": "art01.mp4"
+    },
+    {
+      "slide": "02",
+      "start": 2.5,
+      "end": 9,
+      "kind": "record",
+      "source": "home_and_a_start",
+      "output": "ui_02.mp4"
+    },
+    {
+      "slide": "03",
+      "start": 9,
+      "end": 14,
+      "kind": "record",
+      "source": "learner_a_live",
+      "output": "ui_03.mp4"
+    },
+    {
+      "slide": "04",
+      "start": 14,
+      "end": 18,
+      "kind": "record",
+      "source": "learner_a_live",
+      "output": "ui_04.mp4"
+    },
+    {
+      "slide": "05",
+      "start": 18,
+      "end": 25,
+      "kind": "record",
+      "source": "learner_a_live",
+      "output": "ui_05.mp4"
+    },
+    {
+      "slide": "06",
+      "start": 25,
+      "end": 37,
+      "kind": "record",
+      "source": "learner_a_live",
+      "output": "ui_06.mp4"
+    },
+    {
+      "slide": "07",
+      "start": 37,
+      "end": 44,
+      "kind": "record",
+      "source": "learner_b_live",
+      "output": "ui_07.mp4"
+    },
+    {
+      "slide": "08",
+      "start": 44,
+      "end": 51,
+      "kind": "record",
+      "source": "learner_b_live",
+      "output": "ui_08.mp4"
+    },
+    {
+      "slide": "09",
+      "start": 51,
+      "end": 55,
+      "kind": "art",
+      "source": 9,
+      "output": "art09.mp4"
+    },
+    {
+      "slide": "10",
+      "start": 55,
+      "end": 60,
+      "kind": "split",
+      "source": null,
+      "output": "compare_ab.mp4"
+    },
+    {
+      "slide": "11",
+      "start": 60,
+      "end": 70,
+      "kind": "record",
+      "source": "korean_live",
+      "output": "ui_11.mp4"
+    },
+    {
+      "slide": "12",
+      "start": 70,
+      "end": 75,
+      "kind": "record",
+      "source": "counting_real_valid",
+      "output": "ui_12.mp4"
+    },
+    {
+      "slide": "13",
+      "start": 75,
+      "end": 79,
+      "kind": "record",
+      "source": "counting_real_valid",
+      "output": "ui_13.mp4"
+    },
+    {
+      "slide": "14",
+      "start": 79,
+      "end": 83,
+      "kind": "art",
+      "source": 14,
+      "output": "art14.mp4"
+    },
+    {
+      "slide": "15",
+      "start": 83,
+      "end": 86,
+      "kind": "record",
+      "source": "learner_a_live",
+      "output": "ui_15.mp4"
+    },
+    {
+      "slide": "16",
+      "start": 86,
+      "end": 89,
+      "kind": "record",
+      "source": "textbook_b_valid",
+      "output": "ui_16.mp4"
+    },
+    {
+      "slide": "17",
+      "start": 89,
+      "end": 93,
+      "kind": "record",
+      "source": "app_close_valid",
+      "output": "ui_17.mp4"
+    },
+    {
+      "slide": "18",
+      "start": 93,
+      "end": 96,
+      "kind": "art",
+      "source": 18,
+      "output": "art18.mp4"
+    }
+  ]
+}

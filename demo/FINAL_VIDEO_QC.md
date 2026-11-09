@@ -31,5 +31,5 @@ All three deliverables are in `demo/` and linked in README.
 
 - This is an **edited recording**, not one uncut live run. Model wait times were shortened for the demo.
 - Learners A/B are simulated software test personas, not measured human education outcomes.
-- The 18-slide source storyboard is retained separately; it includes four illustrative PNG cards. This final edited live-capture master uses the two existing editorial cards and actual app scenes for the remainder, rather than reproducing all storyboard cards. Do not claim pixel-perfect rendering of the 18-slide PowerPoint in the MP4.
+- The final edit now follows all 18 original storyboard slots (four GPT-rendered PNG illustration cards plus fourteen real UI recordings) in exact planned order, without redrawing slides as SVG. Assets were transported as a compressed multi-frame WebP package and decoded to PNG for video, so they are visually the same but lossy at 1280×720, rather than bit-identical 4K pixels. The audio and source UI are genuine.
 - A video link and GitHub repo URL are prepared; official event form submission and YouTube/Loom upload have not been performed.
